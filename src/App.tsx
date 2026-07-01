@@ -5,6 +5,7 @@ import { shortDate } from './lib/format'
 import StarfieldBackground from './components/StarfieldBackground'
 import StatsBar from './components/StatsBar'
 import Belt from './components/Belt'
+import BeltLadder from './components/BeltLadder'
 import Heatmap from './components/Heatmap'
 import InterviewProgress from './components/InterviewProgress'
 import PatternsToLearn from './components/PatternsToLearn'
@@ -97,6 +98,9 @@ export default function App() {
         ) : (
           <>
             <Belt solved={dojo.profile.totalSolved} />
+            <div className="mt-4">
+              <BeltLadder solved={dojo.profile.totalSolved} />
+            </div>
             <div className="mt-4">
               <StatsBar profile={dojo.profile} problems={dojo.problems} patterns={patternCount} revisitCount={revisitCount} />
             </div>
