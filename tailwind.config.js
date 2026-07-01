@@ -19,10 +19,10 @@ export default {
         limeInk: '#2E7D14',
         sky: '#7FD1FF',
         gold: '#FFD24D',
-        // Difficulty
-        easy: '#22C55E',
-        medium: '#F59E0B',
-        hard: '#FF4D4D',
+        // NB: difficulty colours (easy/medium/hard) live in src/lib/patterns.ts and
+        // are applied via inline styles — deliberately NOT Tailwind colours, since a
+        // `colors.hard` would generate a `shadow-hard` colour utility that collides
+        // with (and overrides) our `boxShadow.hard`, tinting every hard shadow red.
       },
       fontFamily: {
         black: ['"Archivo Black"', '"Space Grotesk"', 'system-ui', 'sans-serif'],
