@@ -36,7 +36,7 @@ export default function App() {
               🥋
             </span>
             <div>
-              <h1 className="bg-gradient-to-r from-accent-indigo via-accent-blue to-accent-cyan bg-clip-text font-display text-[34px] font-extrabold uppercase leading-none tracking-tight text-transparent [text-shadow:0_0_28px_rgba(99,102,241,0.35)]">
+              <h1 className="bg-gradient-to-r from-accent-indigo via-accent-blue to-accent-cyan bg-clip-text font-display text-[38px] font-extrabold uppercase leading-none tracking-tight text-transparent [text-shadow:0_0_28px_rgba(99,102,241,0.35)]">
                 DSA Dojo
               </h1>
               <p className="mt-1.5 font-mono text-[13px] font-bold uppercase tracking-[0.14em] text-accent-cyan">

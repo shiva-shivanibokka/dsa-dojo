@@ -20,12 +20,12 @@ export default function ProblemCard({ problem, dojo }: { problem: Problem; dojo:
       {/* top row: difficulty + id + revisit star */}
       <div className="flex items-center gap-2">
         <span
-          className="rounded-md border px-2 py-0.5 font-mono text-[11.5px] font-extrabold uppercase tracking-wide"
+          className="rounded-md border px-2 py-0.5 font-mono text-[12.5px] font-extrabold uppercase tracking-wide"
           style={{ color: diff, borderColor: `rgba(${dRgb},0.45)`, background: `rgba(${dRgb},0.12)` }}
         >
           {problem.difficulty}
         </span>
-        {problem.id > 0 && <span className="font-mono text-[12.5px] font-bold text-faint">#{problem.id}</span>}
+        {problem.id > 0 && <span className="font-mono text-[13.5px] font-bold text-faint">#{problem.id}</span>}
         <button
           onClick={() => set(problem.slug, 'revisit', revisit ? undefined : '1')}
           aria-label={revisit ? 'Remove revisit flag' : 'Flag for revisit'}
@@ -70,7 +70,7 @@ export default function ProblemCard({ problem, dojo }: { problem: Problem; dojo:
 
       {/* controls */}
       <div className="mt-auto flex items-center gap-2 pt-1">
-        <span className="font-mono text-[12px] font-semibold text-faint">
+        <span className="font-mono text-[13px] font-semibold text-faint">
           {problem.solvedAt ? `solved ${ago(problem.solvedAt)}` : 'solved'}
         </span>
         <div className="ml-auto w-[116px]">

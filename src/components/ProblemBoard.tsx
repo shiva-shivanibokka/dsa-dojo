@@ -62,7 +62,7 @@ export default function ProblemBoard({ dojo }: { dojo: Dojo }) {
           ))}
           <button
             onClick={() => setOnlyRevisit((v) => !v)}
-            className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[13px] font-bold transition hover:-translate-y-px ${
+            className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[13.5px] font-bold transition hover:-translate-y-px ${
               onlyRevisit
                 ? 'border-accent-amber/60 bg-accent-amber/15 text-accent-amber shadow-[0_0_16px_-6px_rgba(251,191,36,0.9)]'
                 : 'border-white/12 bg-white/[0.03] text-subtle hover:border-white/25'
@@ -151,7 +151,7 @@ function Chip({
   return (
     <button
       onClick={onClick}
-      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[13px] font-bold transition hover:-translate-y-px ${
+      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[13.5px] font-bold transition hover:-translate-y-px ${
         active ? 'text-ink' : 'border-white/12 bg-white/[0.03] text-subtle hover:border-white/25'
       }`}
       style={active ? { borderColor: `rgba(${r},0.6)`, background: `rgba(${r},0.16)`, boxShadow: `0 0 16px -6px rgba(${r},0.9)` } : undefined}
