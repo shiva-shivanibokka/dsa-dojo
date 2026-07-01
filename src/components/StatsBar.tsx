@@ -1,30 +1,27 @@
-import type { Difficulty, Profile } from '../data/types'
+import type { Difficulty, Problem, Profile } from '../data/types'
 import { DIFFICULTY_COLOR, DIFFICULTY_ORDER } from '../lib/patterns'
-import DifficultyRing from './DifficultyRing'
+import SolvedMosaic from './SolvedMosaic'
 
-// Big solved-circle + a difficulty legend beside it (so the wide box reads
-// full), the three stat boxes stacked vertically in the 1/3 column, and the
-// full-width difficulty breakdown below.
+// A mosaic of one square per solved problem (auto-fitting, 2/3 width) with the
+// three stat boxes stacked in the 1/3 beside it, and the full-width difficulty
+// breakdown below.
 export default function StatsBar({
   profile,
+  problems,
   patterns,
   revisitCount,
 }: {
   profile: Profile
+  problems: Problem[]
   patterns: number
   revisitCount: number
 }) {
   return (
     <div className="flex flex-col gap-4">
-      {/* top row: BIG circle + legend (2/3) · three boxes stacked (1/3) */}
+      {/* top row: solved mosaic (2/3) · three boxes stacked (1/3) */}
       <div className="grid gap-4 sm:grid-cols-3">
-        <div className="flex items-center justify-center gap-8 rounded-2xl border border-white/10 bg-white/[0.04] px-6 py-6 shadow-card backdrop-blur-md sm:col-span-2 sm:gap-12">
-          <DifficultyRing profile={profile} size={230} />
-          <div className="flex flex-col gap-4">
-            {DIFFICULTY_ORDER.map((d) => (
-              <Legend key={d} label={d} count={profile.byDifficulty[d].solved} color={DIFFICULTY_COLOR[d]} />
-            ))}
-          </div>
+        <div className="h-[264px] rounded-2xl border border-white/10 bg-white/[0.04] p-2.5 shadow-card backdrop-blur-md sm:col-span-2">
+          <SolvedMosaic problems={problems} />
         </div>
         <div className="grid grid-rows-3 gap-4">
           <Tile value={`🔥 ${profile.streak}`} label="Day streak" rgb="251,191,36" />
@@ -47,18 +44,6 @@ export default function StatsBar({
           ))}
         </div>
       </div>
-    </div>
-  )
-}
-
-function Legend({ label, count, color }: { label: string; count: number; color: string }) {
-  return (
-    <div className="flex items-center gap-3">
-      <span className="h-3.5 w-3.5 shrink-0 rounded-full" style={{ background: color, boxShadow: `0 0 12px ${color}` }} />
-      <span className="w-[74px] font-mono text-[14px] font-bold uppercase tracking-wide" style={{ color }}>
-        {label}
-      </span>
-      <span className="font-display text-[26px] font-extrabold leading-none text-ink">{count}</span>
     </div>
   )
 }

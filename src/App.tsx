@@ -83,7 +83,7 @@ export default function App() {
           </p>
         ) : (
           <>
-            <StatsBar profile={dojo.profile} patterns={patternCount} revisitCount={revisitCount} />
+            <StatsBar profile={dojo.profile} problems={dojo.problems} patterns={patternCount} revisitCount={revisitCount} />
             <div className="mt-7">
               <ProblemBoard dojo={dojo} />
             </div>
