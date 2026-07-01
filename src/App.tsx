@@ -8,6 +8,8 @@ import Belt from './components/Belt'
 import Heatmap from './components/Heatmap'
 import InterviewProgress from './components/InterviewProgress'
 import PatternsToLearn from './components/PatternsToLearn'
+import { BLIND75 } from './data/blind75'
+import { NEETCODE150 } from './data/neetcode150'
 import Ticker from './components/Ticker'
 import ProblemBoard from './components/ProblemBoard'
 import SettingsModal, { SyncBadge } from './components/SettingsModal'
@@ -102,7 +104,10 @@ export default function App() {
               <Heatmap calendar={dojo.profile.calendar} total={dojo.profile.submissionsPastYear} />
             </div>
             <div className="mt-4 grid gap-4 md:grid-cols-2">
-              <InterviewProgress solvedSlugs={solvedSlugs} />
+              <InterviewProgress name="Blind 75" items={BLIND75} solvedSlugs={solvedSlugs} />
+              <InterviewProgress name="NeetCode 150" items={NEETCODE150} solvedSlugs={solvedSlugs} />
+            </div>
+            <div className="mt-4">
               <PatternsToLearn solvedTags={solvedTags} />
             </div>
             <div className="mt-8">

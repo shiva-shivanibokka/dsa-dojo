@@ -14,7 +14,9 @@ export default function Belt({ solved }: { solved: number }) {
           <div className="font-display text-[22px] font-extrabold uppercase leading-none text-ink" style={{ textShadow: `0 0 18px ${c}66` }}>
             {b.current.name} Belt
           </div>
-          <div className="mt-1 font-mono text-[12px] font-bold uppercase tracking-wide text-muted">🥋 {solved} solved</div>
+          <div className="mt-1.5 flex items-center gap-2 font-mono text-[16px] font-bold uppercase tracking-wide text-subtle">
+            <span className="text-[22px] leading-none">⚔️</span> {solved} solved
+          </div>
         </div>
       </div>
 

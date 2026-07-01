@@ -1,19 +1,27 @@
 import { useState } from 'react'
-import { BLIND75 } from '../data/blind75'
+import type { ListItem } from '../data/blind75'
 
-// Progress against the classic Blind 75 interview list, with an expandable
-// checklist of the ones still to do.
-export default function InterviewProgress({ solvedSlugs }: { solvedSlugs: Set<string> }) {
+// Progress against a curated interview list (Blind 75 / NeetCode 150), with an
+// expandable checklist of the ones still to do.
+export default function InterviewProgress({
+  name,
+  items,
+  solvedSlugs,
+}: {
+  name: string
+  items: ListItem[]
+  solvedSlugs: Set<string>
+}) {
   const [open, setOpen] = useState(false)
-  const done = BLIND75.filter((p) => solvedSlugs.has(p.slug)).length
-  const total = BLIND75.length
+  const done = items.filter((p) => solvedSlugs.has(p.slug)).length
+  const total = items.length
   const pct = Math.round((done / total) * 100)
-  const remaining = BLIND75.filter((p) => !solvedSlugs.has(p.slug))
+  const remaining = items.filter((p) => !solvedSlugs.has(p.slug))
 
   return (
     <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 shadow-card backdrop-blur-md">
       <div className="flex items-baseline justify-between">
-        <span className="font-display text-[17px] font-extrabold uppercase text-ink">Blind 75</span>
+        <span className="font-display text-[17px] font-extrabold uppercase text-ink">{name}</span>
         <span className="font-mono text-[13px] font-bold text-subtle">
           <span className="text-accent-cyan">{done}</span> / {total}
         </span>
