@@ -52,32 +52,36 @@ export default function ProblemBoard({ dojo }: { dojo: Dojo }) {
 
   return (
     <div>
-      {/* difficulty + revisit filters */}
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="mr-1 font-mono text-[13px] font-bold uppercase tracking-wide text-muted">Difficulty</span>
-        <Chip active={diff === 'all'} label="All" count={problems.length} color="#a78bfa" onClick={() => setDiff('all')} />
-        {DIFFICULTY_ORDER.map((d) => (
-          <Chip key={d} active={diff === d} label={d} count={diffCounts[d] || 0} color={DIFFICULTY_COLOR[d]} onClick={() => setDiff(d)} />
-        ))}
-        <button
-          onClick={() => setOnlyRevisit((v) => !v)}
-          className={`ml-1 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[13px] font-bold transition hover:-translate-y-px ${
-            onlyRevisit
-              ? 'border-accent-amber/60 bg-accent-amber/15 text-accent-amber shadow-[0_0_16px_-6px_rgba(251,191,36,0.9)]'
-              : 'border-white/12 bg-white/[0.03] text-subtle hover:border-white/25'
-          }`}
-        >
-          ★ Needs revisit <span className="tabular-nums opacity-70">{revisitCount}</span>
-        </button>
+      {/* difficulty + revisit filters — heading in its own column so wrapped chips stay aligned */}
+      <div className="flex gap-3">
+        <span className="w-[76px] shrink-0 pt-2 font-mono text-[13px] font-bold uppercase tracking-wide text-muted">Difficulty</span>
+        <div className="flex flex-1 flex-wrap items-center gap-2">
+          <Chip active={diff === 'all'} label="All" count={problems.length} color="#a78bfa" onClick={() => setDiff('all')} />
+          {DIFFICULTY_ORDER.map((d) => (
+            <Chip key={d} active={diff === d} label={d} count={diffCounts[d] || 0} color={DIFFICULTY_COLOR[d]} onClick={() => setDiff(d)} />
+          ))}
+          <button
+            onClick={() => setOnlyRevisit((v) => !v)}
+            className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[13px] font-bold transition hover:-translate-y-px ${
+              onlyRevisit
+                ? 'border-accent-amber/60 bg-accent-amber/15 text-accent-amber shadow-[0_0_16px_-6px_rgba(251,191,36,0.9)]'
+                : 'border-white/12 bg-white/[0.03] text-subtle hover:border-white/25'
+            }`}
+          >
+            ★ Needs revisit <span className="tabular-nums opacity-70">{revisitCount}</span>
+          </button>
+        </div>
       </div>
 
       {/* pattern filter */}
-      <div className="mt-2.5 flex flex-wrap items-center gap-2">
-        <span className="mr-1 font-mono text-[13px] font-bold uppercase tracking-wide text-muted">Pattern</span>
-        <Chip active={pattern === 'all'} label="All" count={problems.length} color="#a78bfa" onClick={() => setPattern('all')} />
-        {patterns.map(([t, n]) => (
-          <Chip key={t} active={pattern === t} label={t} count={n} color={tagColor(t)} onClick={() => setPattern(t)} />
-        ))}
+      <div className="mt-3 flex gap-3">
+        <span className="w-[76px] shrink-0 pt-2 font-mono text-[13px] font-bold uppercase tracking-wide text-muted">Pattern</span>
+        <div className="flex flex-1 flex-wrap items-center gap-2">
+          <Chip active={pattern === 'all'} label="All" count={problems.length} color="#a78bfa" onClick={() => setPattern('all')} />
+          {patterns.map(([t, n]) => (
+            <Chip key={t} active={pattern === t} label={t} count={n} color={tagColor(t)} onClick={() => setPattern(t)} />
+          ))}
+        </div>
       </div>
 
       {/* search + sort */}
@@ -120,7 +124,7 @@ export default function ProblemBoard({ dojo }: { dojo: Dojo }) {
         </div>
       )}
 
-      <p className="mt-5 text-center font-mono text-[13.5px] font-bold text-muted">
+      <p className="mt-5 text-center font-mono text-[14.5px] font-bold text-subtle">
         Showing {visible.length} of {problems.length} solved
         {diff !== 'all' && <> · {diff}</>}
         {pattern !== 'all' && <> · {pattern}</>}

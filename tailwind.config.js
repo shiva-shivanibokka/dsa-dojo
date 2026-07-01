@@ -4,18 +4,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Neon Graph DARK palette — space canvas, glowing accents.
-        canvas: '#07060f',
-        card: '#12101f', // opaque fallback under the glass
-        ink: '#ECEAFF', // near-white text
-        subtle: '#C7C2E6',
-        muted: '#A19BC6',
-        faint: '#6E6A8C',
-        line: '#241f3a',
+        // Deep-space "starfield" palette — cosmic night, neon accents.
+        canvas: '#05030f',
+        card: '#0e0c22',
+        ink: '#EDECFF',
+        subtle: '#C9C7EE',
+        muted: '#9B98C8',
+        faint: '#6A6796',
+        line: '#221f3d',
         accent: {
-          purple: '#a78bfa',
-          cyan: '#22d3ee',
+          indigo: '#818cf8',
           blue: '#60a5fa',
+          cyan: '#22d3ee',
+          purple: '#a78bfa',
           green: '#34d399',
           amber: '#fbbf24',
           pink: '#f472b6',
@@ -23,14 +24,14 @@ export default {
         },
       },
       fontFamily: {
-        display: ['Orbitron', '"Space Grotesk"', 'system-ui', 'sans-serif'],
+        display: ['Tourney', '"Space Grotesk"', 'system-ui', 'sans-serif'],
         sans: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },
       boxShadow: {
-        glow: '0 0 30px -8px rgba(120,90,255,0.5)',
-        glowcyan: '0 0 26px -8px rgba(34,211,238,0.55)',
-        card: '0 10px 34px -14px rgba(0,0,0,0.7)',
+        glow: '0 0 28px -6px rgba(99,102,241,0.6)',
+        glowcyan: '0 0 24px -6px rgba(34,211,238,0.6)',
+        card: '0 14px 36px -18px rgba(0,0,0,0.8)',
       },
     },
   },

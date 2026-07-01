@@ -8,7 +8,8 @@ export default function DifficultyRing({ profile, size = 132 }: { profile: Profi
   const h = profile.byDifficulty.Hard.solved
   const total = e + m + h || 1
 
-  const r = size / 2 - 12
+  const sw = 15
+  const r = size / 2 - sw
   const c = 2 * Math.PI * r
   const segs = [
     { v: e, color: DIFFICULTY_COLOR.Easy },
@@ -28,10 +29,12 @@ export default function DifficultyRing({ profile, size = 132 }: { profile: Profi
         r={r}
         fill="none"
         stroke={s.color}
-        strokeWidth={14}
-        strokeDasharray={`${len} ${c - len}`}
+        strokeWidth={sw}
+        strokeLinecap="round"
+        strokeDasharray={`${Math.max(len - 2, 0)} ${c - len + 2}`}
         strokeDashoffset={-offset}
         transform={`rotate(-90 ${size / 2} ${size / 2})`}
+        style={{ filter: `drop-shadow(0 0 6px ${s.color})` }}
       />
     )
     offset += len
@@ -41,12 +44,12 @@ export default function DifficultyRing({ profile, size = 132 }: { profile: Profi
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="shrink-0">
       {/* track */}
-      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth={14} />
+      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth={sw} />
       {total > 0 && arcs}
-      <text x="50%" y="47%" textAnchor="middle" className="fill-ink font-display" style={{ fontSize: 30, fontWeight: 700 }}>
+      <text x="50%" y="48%" textAnchor="middle" className="fill-ink font-display" style={{ fontSize: 46, fontWeight: 800 }}>
         {profile.totalSolved}
       </text>
-      <text x="50%" y="62%" textAnchor="middle" className="fill-muted font-mono" style={{ fontSize: 11, fontWeight: 700 }}>
+      <text x="50%" y="63%" textAnchor="middle" className="fill-muted font-mono" style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1 }}>
         SOLVED
       </text>
     </svg>

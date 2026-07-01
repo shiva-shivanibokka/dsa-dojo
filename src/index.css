@@ -12,23 +12,12 @@ html {
 
 body {
   margin: 0;
-  background: #07060f;
-  color: #ecEAff;
+  background:
+    radial-gradient(1200px 720px at 50% -12%, #151033, #05030f 72%);
+  background-attachment: fixed;
+  color: #edecff;
   font-family: 'Space Grotesk', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
-}
-
-/* Soft nebula glow above the graph canvas so content stays readable */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -5;
-  pointer-events: none;
-  background:
-    radial-gradient(1100px 560px at 50% -12%, rgba(124, 92, 255, 0.16), transparent 60%),
-    radial-gradient(900px 560px at 92% 108%, rgba(34, 211, 238, 0.12), transparent 60%),
-    radial-gradient(1200px 800px at 50% 50%, transparent 42%, rgba(4, 4, 10, 0.72) 100%);
 }
 
 /* Thin neon scrollbar */

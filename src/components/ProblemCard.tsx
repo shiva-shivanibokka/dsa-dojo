@@ -45,7 +45,7 @@ export default function ProblemCard({ problem, dojo }: { problem: Problem; dojo:
         href={problem.url}
         target="_blank"
         rel="noreferrer"
-        className="font-display text-[16px] font-bold leading-tight text-ink underline-offset-2 transition hover:text-accent-cyan hover:underline"
+        className="font-sans text-[16px] font-bold leading-tight text-ink underline-offset-2 transition hover:text-accent-cyan hover:underline"
       >
         {problem.title}
       </a>

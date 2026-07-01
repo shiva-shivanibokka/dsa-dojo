@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { useDojo } from './lib/store'
 import { hasToken } from './lib/github'
 import { shortDate } from './lib/format'
-import GraphBackground from './components/GraphBackground'
+import StarfieldBackground from './components/StarfieldBackground'
 import StatsBar from './components/StatsBar'
 import Ticker from './components/Ticker'
 import ProblemBoard from './components/ProblemBoard'
@@ -26,20 +26,20 @@ export default function App() {
 
   return (
     <div className="min-h-screen">
-      <GraphBackground />
+      <StarfieldBackground />
 
       {/* header */}
       <header className="sticky top-0 z-20 border-b border-white/10 bg-canvas/70 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-2 px-5 py-4">
-          <div className="flex items-center gap-3">
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-accent-purple to-accent-cyan text-[22px] shadow-glow">
+          <div className="flex items-center gap-3.5">
+            <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-accent-indigo to-accent-cyan text-[28px] shadow-glow">
               🥋
             </span>
             <div>
-              <h1 className="bg-gradient-to-r from-accent-purple via-accent-blue to-accent-cyan bg-clip-text font-display text-[24px] font-black leading-none tracking-tight text-transparent">
-                DSA DOJO
+              <h1 className="bg-gradient-to-r from-accent-indigo via-accent-blue to-accent-cyan bg-clip-text font-display text-[34px] font-extrabold uppercase leading-none tracking-tight text-transparent [text-shadow:0_0_28px_rgba(99,102,241,0.35)]">
+                DSA Dojo
               </h1>
-              <p className="mt-1.5 font-mono text-[12.5px] font-bold uppercase tracking-[0.12em] text-accent-cyan">
+              <p className="mt-1.5 font-mono text-[13px] font-bold uppercase tracking-[0.14em] text-accent-cyan">
                 Grind. Pattern. Master.
               </p>
             </div>
@@ -47,14 +47,14 @@ export default function App() {
 
           <div className="ml-auto flex items-center gap-3">
             {dojo.generatedAt && (
-              <span className="hidden font-mono text-[12.5px] font-semibold text-faint sm:inline">
+              <span className="hidden font-mono text-[14px] font-semibold text-subtle sm:inline">
                 Synced {shortDate(dojo.generatedAt)} · {dojo.problems.length} solved
               </span>
             )}
             <SyncBadge state={dojo.syncState} onManual={dojo.syncNow} />
             <button
               onClick={() => (tokenOn ? dojo.syncNow() : dojo.exportOverrides())}
-              className="rounded-xl bg-gradient-to-r from-accent-purple to-accent-cyan px-4 py-2 text-[13.5px] font-bold text-canvas shadow-glow transition hover:-translate-y-0.5"
+              className="rounded-xl bg-gradient-to-r from-accent-indigo to-accent-cyan px-4 py-2.5 text-[14px] font-bold text-canvas shadow-glow transition hover:-translate-y-0.5"
             >
               {tokenOn ? 'Save now' : 'Back up'}
             </button>
@@ -74,7 +74,7 @@ export default function App() {
 
       <Ticker problems={dojo.problems} profile={dojo.profile} />
 
-      <main className="mx-auto max-w-6xl px-5 pb-10 pt-7">
+      <main className="mx-auto max-w-6xl px-5 pb-3 pt-7">
         {dojo.loading ? (
           <p className="mt-16 text-center font-mono text-[15px] font-bold text-muted">Loading your dojo…</p>
         ) : dojo.error ? (
@@ -91,8 +91,8 @@ export default function App() {
         )}
       </main>
 
-      <footer className="mx-auto max-w-6xl px-5 pb-10 pt-1">
-        <p className="text-center font-mono text-[12.5px] font-semibold text-faint">
+      <footer className="mx-auto max-w-6xl px-5 pb-10">
+        <p className="text-center font-mono text-[14px] font-semibold text-faint">
           New solves appear here automatically — solve on LeetCode, the dojo picks them up.
         </p>
       </footer>
