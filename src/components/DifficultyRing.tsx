@@ -41,12 +41,9 @@ export default function DifficultyRing({ profile, size = 132 }: { profile: Profi
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="shrink-0">
       {/* track */}
-      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="#E7E0CE" strokeWidth={14} />
+      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth={14} />
       {total > 0 && arcs}
-      {/* black outline rings for the brutalist edge */}
-      <circle cx={size / 2} cy={size / 2} r={r + 7} fill="none" stroke="#141210" strokeWidth={2} />
-      <circle cx={size / 2} cy={size / 2} r={r - 7} fill="none" stroke="#141210" strokeWidth={2} />
-      <text x="50%" y="47%" textAnchor="middle" className="fill-ink" style={{ fontSize: 30, fontFamily: '"Archivo Black", sans-serif' }}>
+      <text x="50%" y="47%" textAnchor="middle" className="fill-ink font-display" style={{ fontSize: 30, fontWeight: 700 }}>
         {profile.totalSolved}
       </text>
       <text x="50%" y="62%" textAnchor="middle" className="fill-muted font-mono" style={{ fontSize: 11, fontWeight: 700 }}>

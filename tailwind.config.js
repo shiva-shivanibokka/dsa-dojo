@@ -4,38 +4,33 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Neo-brutalist LIGHT palette — cream paper, ink-black lines.
-        paper: '#FBF6EA', // page canvas (warm cream)
-        card: '#FFFDF7', // slightly brighter card surface
-        ink: '#141210', // near-black text / borders
-        muted: '#5A554C', // secondary text
-        faint: '#8A8477', // tertiary text
-        band: '#141210', // black stat band
-        // Loud accents (each pairs with a black border + hard shadow)
-        coral: '#FF5C5C',
-        grape: '#C7B4FF',
-        grapeInk: '#5B3FD1',
-        lime: '#8CE35B',
-        limeInk: '#2E7D14',
-        sky: '#7FD1FF',
-        gold: '#FFD24D',
-        // NB: difficulty colours (easy/medium/hard) live in src/lib/patterns.ts and
-        // are applied via inline styles — deliberately NOT Tailwind colours, since a
-        // `colors.hard` would generate a `shadow-hard` colour utility that collides
-        // with (and overrides) our `boxShadow.hard`, tinting every hard shadow red.
+        // Neon Graph DARK palette — space canvas, glowing accents.
+        canvas: '#07060f',
+        card: '#12101f', // opaque fallback under the glass
+        ink: '#ECEAFF', // near-white text
+        subtle: '#C7C2E6',
+        muted: '#A19BC6',
+        faint: '#6E6A8C',
+        line: '#241f3a',
+        accent: {
+          purple: '#a78bfa',
+          cyan: '#22d3ee',
+          blue: '#60a5fa',
+          green: '#34d399',
+          amber: '#fbbf24',
+          pink: '#f472b6',
+          rose: '#fb7185',
+        },
       },
       fontFamily: {
-        black: ['"Archivo Black"', '"Space Grotesk"', 'system-ui', 'sans-serif'],
-        display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+        display: ['Orbitron', '"Space Grotesk"', 'system-ui', 'sans-serif'],
         sans: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },
       boxShadow: {
-        // Hard offset shadows — the signature neo-brutalist look (no blur).
-        hard: '4px 4px 0 0 #141210',
-        hardlg: '6px 6px 0 0 #141210',
-        hardxl: '8px 8px 0 0 #141210',
-        hardsm: '2px 2px 0 0 #141210',
+        glow: '0 0 30px -8px rgba(120,90,255,0.5)',
+        glowcyan: '0 0 26px -8px rgba(34,211,238,0.55)',
+        card: '0 10px 34px -14px rgba(0,0,0,0.7)',
       },
     },
   },

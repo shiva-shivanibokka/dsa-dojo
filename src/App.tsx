@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { useDojo } from './lib/store'
 import { hasToken } from './lib/github'
 import { shortDate } from './lib/format'
+import GraphBackground from './components/GraphBackground'
 import StatsBar from './components/StatsBar'
 import Ticker from './components/Ticker'
 import ProblemBoard from './components/ProblemBoard'
@@ -25,16 +26,20 @@ export default function App() {
 
   return (
     <div className="min-h-screen">
+      <GraphBackground />
+
       {/* header */}
-      <header className="border-b-2 border-ink bg-paper/85 backdrop-blur-sm">
+      <header className="sticky top-0 z-20 border-b border-white/10 bg-canvas/70 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-2 px-5 py-4">
-          <div className="flex items-center gap-2.5">
-            <span className="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-ink bg-coral text-[20px] shadow-hardsm">
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-accent-purple to-accent-cyan text-[22px] shadow-glow">
               🥋
             </span>
             <div>
-              <h1 className="font-black text-[26px] leading-none tracking-tight text-ink">DSA DOJO</h1>
-              <p className="mt-1 font-mono text-[12.5px] font-bold uppercase tracking-wide text-grapeInk">
+              <h1 className="bg-gradient-to-r from-accent-purple via-accent-blue to-accent-cyan bg-clip-text font-display text-[24px] font-black leading-none tracking-tight text-transparent">
+                DSA DOJO
+              </h1>
+              <p className="mt-1.5 font-mono text-[12.5px] font-bold uppercase tracking-[0.12em] text-accent-cyan">
                 Grind. Pattern. Master.
               </p>
             </div>
@@ -49,14 +54,14 @@ export default function App() {
             <SyncBadge state={dojo.syncState} onManual={dojo.syncNow} />
             <button
               onClick={() => (tokenOn ? dojo.syncNow() : dojo.exportOverrides())}
-              className="rounded-lg border-2 border-ink bg-lime px-3.5 py-2 text-[13.5px] font-bold text-ink shadow-hard transition hover:-translate-y-0.5"
+              className="rounded-xl bg-gradient-to-r from-accent-purple to-accent-cyan px-4 py-2 text-[13.5px] font-bold text-canvas shadow-glow transition hover:-translate-y-0.5"
             >
               {tokenOn ? 'Save now' : 'Back up'}
             </button>
             <button
               onClick={() => setSettingsOpen(true)}
               aria-label="Settings"
-              className="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-ink bg-grape text-ink shadow-hard transition hover:-translate-y-0.5"
+              className="flex h-11 w-11 items-center justify-center rounded-xl border border-accent-cyan/40 bg-accent-cyan/10 text-accent-cyan shadow-glowcyan transition hover:-translate-y-0.5"
             >
               <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <circle cx="12" cy="12" r="3" />
@@ -69,11 +74,11 @@ export default function App() {
 
       <Ticker problems={dojo.problems} profile={dojo.profile} />
 
-      <main className="mx-auto max-w-6xl px-5 pb-10 pt-6">
+      <main className="mx-auto max-w-6xl px-5 pb-10 pt-7">
         {dojo.loading ? (
           <p className="mt-16 text-center font-mono text-[15px] font-bold text-muted">Loading your dojo…</p>
         ) : dojo.error ? (
-          <p className="mt-16 text-center font-mono text-[14px] font-bold" style={{ color: '#C22' }}>
+          <p className="mt-16 text-center font-mono text-[14px] font-bold text-accent-rose">
             Couldn’t load problems: {dojo.error}
           </p>
         ) : (
@@ -92,11 +97,7 @@ export default function App() {
         </p>
       </footer>
 
-      <SettingsModal
-        open={settingsOpen}
-        onClose={() => setSettingsOpen(false)}
-        onChange={() => setTokenOn(hasToken())}
-      />
+      <SettingsModal open={settingsOpen} onClose={() => setSettingsOpen(false)} onChange={() => setTokenOn(hasToken())} />
     </div>
   )
 }

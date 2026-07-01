@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { rgb } from '../lib/patterns'
 
 export interface SelectOption {
   value: string
@@ -9,9 +10,8 @@ export interface SelectOption {
 
 type Pos = { top: number; left: number; width: number }
 
-// Neo-brutalist dropdown replacing the native <select>. The option panel is
-// rendered in a portal with fixed positioning so it floats above cards, and
-// flips upward when there's no room below.
+// Custom dropdown replacing the native <select>. The option panel renders in a
+// portal (fixed) so it floats above the glass cards, flipping up when needed.
 export default function Select({
   value,
   options,
@@ -78,6 +78,8 @@ export default function Select({
     setOpen(false)
   }
 
+  const c = cur ? rgb(cur.color) : null
+
   return (
     <>
       <button
@@ -87,12 +89,17 @@ export default function Select({
         aria-haspopup="listbox"
         aria-expanded={open}
         onClick={toggle}
-        className="inline-flex w-full items-center gap-1.5 rounded-md border-2 border-ink px-2.5 py-1.5 text-[13.5px] font-bold text-ink shadow-hardsm transition hover:-translate-y-px"
-        style={{ background: cur ? cur.color : '#FFFDF7' }}
+        className="inline-flex w-full items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-[13.5px] font-bold transition hover:-translate-y-px"
+        style={
+          c
+            ? { color: cur!.color, borderColor: `rgba(${c},0.5)`, background: `rgba(${c},0.14)`, boxShadow: `0 0 16px -6px rgba(${c},0.8)` }
+            : { color: '#A19BC6', borderColor: 'rgba(255,255,255,0.14)', background: 'rgba(255,255,255,0.04)' }
+        }
       >
+        {cur && <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: cur.color, boxShadow: `0 0 8px ${cur.color}` }} />}
         <span className="truncate">{cur ? cur.label : placeholder}</span>
-        <svg className={`ml-auto h-3 w-3 shrink-0 transition ${open ? 'rotate-180' : ''}`} viewBox="0 0 12 12" fill="none">
-          <path d="M3 4.5 6 7.5 9 4.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <svg className={`ml-auto h-3 w-3 shrink-0 opacity-70 transition ${open ? 'rotate-180' : ''}`} viewBox="0 0 12 12" fill="none">
+          <path d="M3 4.5 6 7.5 9 4.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </button>
 
@@ -103,29 +110,29 @@ export default function Select({
             ref={panelRef}
             role="listbox"
             style={{ position: 'fixed', top: pos.top, left: pos.left, minWidth: pos.width }}
-            className="z-[999] overflow-hidden rounded-md border-2 border-ink bg-card p-1 shadow-hardlg"
+            className="z-[999] overflow-hidden rounded-xl border border-white/12 bg-[#15132a] p-1 shadow-2xl ring-1 ring-black/40"
           >
             <li>
               <button
                 onClick={() => choose(undefined)}
-                className="flex w-full items-center gap-2 rounded px-2.5 py-2 text-[13.5px] font-semibold text-muted transition hover:bg-ink/5"
+                className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-[13.5px] font-semibold text-faint transition hover:bg-white/[0.06]"
               >
-                <span className="h-3 w-3 rounded-full border-2 border-ink bg-paper" />
+                <span className="h-2 w-2 rounded-full bg-white/25" />
                 <span>None</span>
-                {value == null && <span className="ml-auto">✓</span>}
+                {value == null && <span className="ml-auto text-accent-cyan">✓</span>}
               </button>
             </li>
             {options.map((o) => (
               <li key={o.value}>
                 <button
                   onClick={() => choose(o.value)}
-                  className={`flex w-full items-center gap-2 rounded px-2.5 py-2 text-[13.5px] font-bold text-ink transition hover:bg-ink/5 ${
-                    value === o.value ? 'bg-ink/5' : ''
+                  className={`flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-[13.5px] font-bold transition hover:bg-white/[0.06] ${
+                    value === o.value ? 'text-ink' : 'text-subtle'
                   }`}
                 >
-                  <span className="h-3 w-3 rounded-full border-2 border-ink" style={{ background: o.color }} />
+                  <span className="h-2 w-2 rounded-full" style={{ background: o.color, boxShadow: `0 0 8px ${o.color}` }} />
                   <span>{o.label}</span>
-                  {value === o.value && <span className="ml-auto">✓</span>}
+                  {value === o.value && <span className="ml-auto text-accent-cyan">✓</span>}
                 </button>
               </li>
             ))}

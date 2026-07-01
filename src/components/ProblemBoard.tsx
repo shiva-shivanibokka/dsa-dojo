@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import type { Difficulty } from '../data/types'
 import type { Dojo } from '../lib/store'
-import { DIFFICULTY_COLOR, DIFFICULTY_ORDER, tagColor } from '../lib/patterns'
+import { DIFFICULTY_COLOR, DIFFICULTY_ORDER, rgb, tagColor } from '../lib/patterns'
 import ProblemCard from './ProblemCard'
 
 type SortKey = 'recent' | 'difficulty' | 'id'
@@ -55,14 +55,16 @@ export default function ProblemBoard({ dojo }: { dojo: Dojo }) {
       {/* difficulty + revisit filters */}
       <div className="flex flex-wrap items-center gap-2">
         <span className="mr-1 font-mono text-[13px] font-bold uppercase tracking-wide text-muted">Difficulty</span>
-        <Chip active={diff === 'all'} label="All" count={problems.length} color="#141210" light onClick={() => setDiff('all')} />
+        <Chip active={diff === 'all'} label="All" count={problems.length} color="#a78bfa" onClick={() => setDiff('all')} />
         {DIFFICULTY_ORDER.map((d) => (
           <Chip key={d} active={diff === d} label={d} count={diffCounts[d] || 0} color={DIFFICULTY_COLOR[d]} onClick={() => setDiff(d)} />
         ))}
         <button
           onClick={() => setOnlyRevisit((v) => !v)}
-          className={`ml-1 inline-flex items-center gap-1.5 rounded-full border-2 border-ink px-3 py-1.5 text-[13px] font-bold text-ink shadow-hardsm transition hover:-translate-y-px ${
-            onlyRevisit ? 'bg-gold' : 'bg-card'
+          className={`ml-1 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[13px] font-bold transition hover:-translate-y-px ${
+            onlyRevisit
+              ? 'border-accent-amber/60 bg-accent-amber/15 text-accent-amber shadow-[0_0_16px_-6px_rgba(251,191,36,0.9)]'
+              : 'border-white/12 bg-white/[0.03] text-subtle hover:border-white/25'
           }`}
         >
           ★ Needs revisit <span className="tabular-nums opacity-70">{revisitCount}</span>
@@ -72,7 +74,7 @@ export default function ProblemBoard({ dojo }: { dojo: Dojo }) {
       {/* pattern filter */}
       <div className="mt-2.5 flex flex-wrap items-center gap-2">
         <span className="mr-1 font-mono text-[13px] font-bold uppercase tracking-wide text-muted">Pattern</span>
-        <Chip active={pattern === 'all'} label="All" count={problems.length} color="#141210" light onClick={() => setPattern('all')} />
+        <Chip active={pattern === 'all'} label="All" count={problems.length} color="#a78bfa" onClick={() => setPattern('all')} />
         {patterns.map(([t, n]) => (
           <Chip key={t} active={pattern === t} label={t} count={n} color={tagColor(t)} onClick={() => setPattern(t)} />
         ))}
@@ -81,24 +83,24 @@ export default function ProblemBoard({ dojo }: { dojo: Dojo }) {
       {/* search + sort */}
       <div className="mt-4 flex flex-wrap items-center gap-3">
         <div className="relative min-w-[220px] flex-1">
-          <svg className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" viewBox="0 0 20 20" fill="none">
-            <circle cx="9" cy="9" r="6" stroke="currentColor" strokeWidth="2" />
-            <path d="m14 14 3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          <svg className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" viewBox="0 0 20 20" fill="none">
+            <circle cx="9" cy="9" r="6" stroke="currentColor" strokeWidth="1.8" />
+            <path d="m14 14 3 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
           </svg>
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Search title, number, or tag…"
-            className="w-full rounded-lg border-2 border-ink bg-card py-2.5 pl-9 pr-3 text-[14px] font-medium text-ink shadow-hardsm outline-none placeholder:text-faint focus:-translate-y-px"
+            className="w-full rounded-xl border border-white/10 bg-white/[0.04] py-2.5 pl-9 pr-3 text-[14px] font-medium text-ink outline-none backdrop-blur-md placeholder:text-faint focus:border-accent-cyan/60"
           />
         </div>
-        <div className="flex items-center gap-1 rounded-lg border-2 border-ink bg-card p-1 shadow-hardsm">
+        <div className="flex items-center gap-1 rounded-xl border border-white/10 bg-white/[0.04] p-1 backdrop-blur-md">
           {(['recent', 'difficulty', 'id'] as SortKey[]).map((s) => (
             <button
               key={s}
               onClick={() => setSort(s)}
-              className={`rounded px-3 py-1.5 text-[13px] font-bold transition ${
-                sort === s ? 'bg-ink text-paper' : 'text-muted hover:text-ink'
+              className={`rounded-lg px-3 py-1.5 text-[13px] font-bold transition ${
+                sort === s ? 'bg-white/10 text-ink' : 'text-muted hover:text-ink'
               }`}
             >
               {s === 'recent' ? 'Recent' : s === 'difficulty' ? 'Difficulty' : '# Number'}
@@ -133,25 +135,24 @@ function Chip({
   label,
   count,
   color,
-  light,
   onClick,
 }: {
   active: boolean
   label: string
   count: number
   color: string
-  light?: boolean
   onClick: () => void
 }) {
+  const r = rgb(color)
   return (
     <button
       onClick={onClick}
-      className={`inline-flex items-center gap-1.5 rounded-full border-2 border-ink px-3 py-1.5 text-[13px] font-bold text-ink transition hover:-translate-y-px ${
-        active ? 'shadow-hardsm' : 'bg-card hover:shadow-hardsm'
+      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[13px] font-bold transition hover:-translate-y-px ${
+        active ? 'text-ink' : 'border-white/12 bg-white/[0.03] text-subtle hover:border-white/25'
       }`}
-      style={active ? { background: light ? '#141210' : color, color: light ? '#FBF6EA' : '#141210' } : undefined}
+      style={active ? { borderColor: `rgba(${r},0.6)`, background: `rgba(${r},0.16)`, boxShadow: `0 0 16px -6px rgba(${r},0.9)` } : undefined}
     >
-      <span className="h-2.5 w-2.5 rounded-full border border-ink" style={{ background: color }} />
+      <span className="h-2.5 w-2.5 rounded-full" style={{ background: color, boxShadow: `0 0 8px ${color}` }} />
       {label}
       <span className="tabular-nums opacity-70">{count}</span>
     </button>

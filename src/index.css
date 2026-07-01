@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 html {
@@ -12,27 +12,39 @@ html {
 
 body {
   margin: 0;
-  background-color: #fbf6ea;
-  /* Dotted paper — the signature neo-brutalist backdrop */
-  background-image: radial-gradient(rgba(20, 18, 16, 0.14) 1.3px, transparent 1.3px);
-  background-size: 18px 18px;
-  color: #141210;
+  background: #07060f;
+  color: #ecEAff;
   font-family: 'Space Grotesk', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Chunky ink scrollbar to match the borders */
+/* Soft nebula glow above the graph canvas so content stays readable */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -5;
+  pointer-events: none;
+  background:
+    radial-gradient(1100px 560px at 50% -12%, rgba(124, 92, 255, 0.16), transparent 60%),
+    radial-gradient(900px 560px at 92% 108%, rgba(34, 211, 238, 0.12), transparent 60%),
+    radial-gradient(1200px 800px at 50% 50%, transparent 42%, rgba(4, 4, 10, 0.72) 100%);
+}
+
+/* Thin neon scrollbar */
 *::-webkit-scrollbar {
-  height: 12px;
-  width: 12px;
+  height: 10px;
+  width: 10px;
 }
 *::-webkit-scrollbar-track {
   background: transparent;
 }
 *::-webkit-scrollbar-thumb {
-  background: #141210;
-  border-radius: 0;
-  border: 3px solid #fbf6ea;
+  background: #2a2740;
+  border-radius: 999px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #3a3660;
 }
 
 /* Marquee ticker */

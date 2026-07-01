@@ -39,10 +39,18 @@ export function tagColor(tag: string): string {
   return PALETTE[h % PALETTE.length]
 }
 
+// hex (#RRGGBB) → "r,g,b" for translucent neon fills on the dark theme.
+export function rgb(hex: string): string {
+  const m = hex.replace('#', '')
+  const n = parseInt(m.length === 3 ? m.replace(/(.)/g, '$1$1') : m, 16)
+  return `${(n >> 16) & 255},${(n >> 8) & 255},${n & 255}`
+}
+
+// Brightened for the dark theme.
 export const DIFFICULTY_COLOR: Record<Difficulty, string> = {
-  Easy: '#22C55E',
-  Medium: '#F59E0B',
-  Hard: '#FF4D4D',
+  Easy: '#34d399',
+  Medium: '#fbbf24',
+  Hard: '#fb7185',
 }
 
 export const DIFFICULTY_ORDER: Difficulty[] = ['Easy', 'Medium', 'Hard']
@@ -50,8 +58,8 @@ export const DIFFICULTY_ORDER: Difficulty[] = ['Easy', 'Medium', 'Hard']
 // Confidence dropdown options (the user's self-assessment).
 export type ConfKey = 'solid' | 'shaky' | 'forgot'
 export const CONFIDENCE: { value: ConfKey; label: string; color: string }[] = [
-  { value: 'solid', label: 'Solid', color: '#22C55E' },
-  { value: 'shaky', label: 'Shaky', color: '#F59E0B' },
-  { value: 'forgot', label: 'Forgot', color: '#FF4D4D' },
+  { value: 'solid', label: 'Solid', color: '#34d399' },
+  { value: 'shaky', label: 'Shaky', color: '#fbbf24' },
+  { value: 'forgot', label: 'Forgot', color: '#fb7185' },
 ]
 export const confOf = (v: string | undefined) => CONFIDENCE.find((c) => c.value === v)

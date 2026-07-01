@@ -1,6 +1,6 @@
 import type { Problem } from '../data/types'
 import type { Dojo } from '../lib/store'
-import { CONFIDENCE, DIFFICULTY_COLOR, tagColor } from '../lib/patterns'
+import { CONFIDENCE, DIFFICULTY_COLOR, rgb, tagColor } from '../lib/patterns'
 import { ago } from '../lib/format'
 import Select from './Select'
 
@@ -9,15 +9,19 @@ export default function ProblemCard({ problem, dojo }: { problem: Problem; dojo:
   const confidence = get(problem.slug, 'confidence')
   const revisit = get(problem.slug, 'revisit') === '1'
   const notes = get(problem.slug, 'notes') || ''
-  const diffColor = DIFFICULTY_COLOR[problem.difficulty]
+  const diff = DIFFICULTY_COLOR[problem.difficulty]
+  const dRgb = rgb(diff)
 
   return (
-    <div className="flex flex-col gap-3 rounded-xl border-2 border-ink bg-card p-4 shadow-hard transition hover:-translate-y-0.5 hover:shadow-hardlg">
+    <div
+      className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4 shadow-card backdrop-blur-md transition hover:-translate-y-0.5 hover:border-white/20"
+      style={{ boxShadow: `inset 3px 0 0 0 rgba(${dRgb},0.9)` }}
+    >
       {/* top row: difficulty + id + revisit star */}
       <div className="flex items-center gap-2">
         <span
-          className="rounded-md border-2 border-ink px-2 py-0.5 font-mono text-[11.5px] font-extrabold uppercase tracking-wide text-ink"
-          style={{ background: diffColor }}
+          className="rounded-md border px-2 py-0.5 font-mono text-[11.5px] font-extrabold uppercase tracking-wide"
+          style={{ color: diff, borderColor: `rgba(${dRgb},0.45)`, background: `rgba(${dRgb},0.12)` }}
         >
           {problem.difficulty}
         </span>
@@ -26,8 +30,10 @@ export default function ProblemCard({ problem, dojo }: { problem: Problem; dojo:
           onClick={() => set(problem.slug, 'revisit', revisit ? undefined : '1')}
           aria-label={revisit ? 'Remove revisit flag' : 'Flag for revisit'}
           title={revisit ? 'Flagged to revisit' : 'Flag for revisit'}
-          className={`ml-auto flex h-8 w-8 items-center justify-center rounded-md border-2 border-ink text-[15px] shadow-hardsm transition hover:-translate-y-px ${
-            revisit ? 'bg-gold' : 'bg-card'
+          className={`ml-auto flex h-8 w-8 items-center justify-center rounded-lg border text-[15px] transition hover:-translate-y-px ${
+            revisit
+              ? 'border-accent-amber/60 bg-accent-amber/15 text-accent-amber shadow-[0_0_14px_-4px_rgba(251,191,36,0.9)]'
+              : 'border-white/12 bg-white/[0.03] text-faint'
           }`}
         >
           {revisit ? '★' : '☆'}
@@ -39,7 +45,7 @@ export default function ProblemCard({ problem, dojo }: { problem: Problem; dojo:
         href={problem.url}
         target="_blank"
         rel="noreferrer"
-        className="font-display text-[17px] font-bold leading-tight text-ink underline-offset-2 hover:underline"
+        className="font-display text-[16px] font-bold leading-tight text-ink underline-offset-2 transition hover:text-accent-cyan hover:underline"
       >
         {problem.title}
       </a>
@@ -47,15 +53,18 @@ export default function ProblemCard({ problem, dojo }: { problem: Problem; dojo:
       {/* tags */}
       {problem.tags.length > 0 && (
         <div className="flex flex-wrap gap-1.5">
-          {problem.tags.map((t) => (
-            <span
-              key={t}
-              className="rounded border-2 border-ink px-1.5 py-0.5 font-mono text-[11px] font-bold text-ink"
-              style={{ background: tagColor(t) }}
-            >
-              {t}
-            </span>
-          ))}
+          {problem.tags.map((t) => {
+            const r = rgb(tagColor(t))
+            return (
+              <span
+                key={t}
+                className="rounded-md border px-1.5 py-0.5 font-mono text-[11px] font-bold"
+                style={{ color: tagColor(t), borderColor: `rgba(${r},0.4)`, background: `rgba(${r},0.12)` }}
+              >
+                {t}
+              </span>
+            )
+          })}
         </div>
       )}
 
@@ -64,7 +73,7 @@ export default function ProblemCard({ problem, dojo }: { problem: Problem; dojo:
         <span className="font-mono text-[12px] font-semibold text-faint">
           {problem.solvedAt ? `solved ${ago(problem.solvedAt)}` : 'solved'}
         </span>
-        <div className="ml-auto w-[112px]">
+        <div className="ml-auto w-[116px]">
           <Select
             ariaLabel={`Confidence for ${problem.title}`}
             value={confidence}
@@ -80,7 +89,7 @@ export default function ProblemCard({ problem, dojo }: { problem: Problem; dojo:
         value={notes}
         onChange={(e) => set(problem.slug, 'notes', e.target.value)}
         placeholder="+ approach / notes…"
-        className="w-full rounded-md border-2 border-ink/25 bg-paper px-2.5 py-1.5 text-[13px] font-medium text-ink outline-none transition placeholder:text-faint focus:border-ink"
+        className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-2.5 py-1.5 text-[13px] font-medium text-ink outline-none transition placeholder:text-faint focus:border-accent-cyan/60 focus:bg-white/[0.05]"
       />
     </div>
   )
