@@ -13,6 +13,7 @@ export default function ProblemBoard({ dojo }: { dojo: Dojo }) {
   const [pattern, setPattern] = useState<string>('all')
   const [onlyRevisit, setOnlyRevisit] = useState(false)
   const [sort, setSort] = useState<SortKey>('recent')
+  const [grouped, setGrouped] = useState(false)
 
   const diffCounts = useMemo(() => {
     const c: Record<string, number> = { Easy: 0, Medium: 0, Hard: 0 }
@@ -111,11 +112,38 @@ export default function ProblemBoard({ dojo }: { dojo: Dojo }) {
             </button>
           ))}
         </div>
+        <button
+          onClick={() => setGrouped((v) => !v)}
+          className={`rounded-xl border px-3.5 py-2.5 text-[13px] font-bold transition ${
+            grouped
+              ? 'border-accent-purple/60 bg-accent-purple/15 text-accent-purple shadow-[0_0_16px_-6px_rgba(167,139,250,0.9)]'
+              : 'border-white/10 bg-white/[0.04] text-muted hover:text-ink'
+          }`}
+        >
+          ⊞ Group by pattern
+        </button>
       </div>
 
       {/* grid */}
       {visible.length === 0 ? (
         <p className="mt-12 text-center font-mono text-[14px] font-bold text-muted">No problems match.</p>
+      ) : grouped ? (
+        <div className="mt-5 flex flex-col gap-7">
+          {groupByPattern(visible).map(([tag, items]) => (
+            <div key={tag}>
+              <div className="mb-3 flex items-center gap-2">
+                <span className="h-3 w-3 rounded-full" style={{ background: tagColor(tag), boxShadow: `0 0 8px ${tagColor(tag)}` }} />
+                <h3 className="font-display text-[16px] font-extrabold uppercase text-ink">{tag}</h3>
+                <span className="font-mono text-[13px] font-bold text-faint">{items.length}</span>
+              </div>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                {items.map((p) => (
+                  <ProblemCard key={p.slug} problem={p} dojo={dojo} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       ) : (
         <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {visible.map((p) => (
@@ -132,6 +160,19 @@ export default function ProblemBoard({ dojo }: { dojo: Dojo }) {
       </p>
     </div>
   )
+}
+
+// Group problems by pattern (a problem appears under each of its tags), sections
+// ordered by size then name.
+function groupByPattern(items: import('../data/types').Problem[]): [string, import('../data/types').Problem[]][] {
+  const map = new Map<string, import('../data/types').Problem[]>()
+  for (const p of items) {
+    for (const t of p.tags) {
+      if (!map.has(t)) map.set(t, [])
+      map.get(t)!.push(p)
+    }
+  }
+  return [...map.entries()].sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]))
 }
 
 function Chip({

@@ -133,10 +133,15 @@ function buildProfile(profileData, calendarData) {
 
   const cal = calendarData?.matchedUser?.userCalendar
   let submissionsPastYear = 0
+  const calendar = {} // 'YYYY-MM-DD' → count
   if (cal?.submissionCalendar) {
     try {
       const map = JSON.parse(cal.submissionCalendar)
-      submissionsPastYear = Object.values(map).reduce((a, b) => a + Number(b), 0)
+      for (const [ts, count] of Object.entries(map)) {
+        submissionsPastYear += Number(count)
+        const day = new Date(Number(ts) * 1000).toISOString().slice(0, 10)
+        calendar[day] = (calendar[day] || 0) + Number(count)
+      }
     } catch {
       /* ignore */
     }
@@ -149,6 +154,7 @@ function buildProfile(profileData, calendarData) {
     streak: cal?.streak ?? 0,
     totalActiveDays: cal?.totalActiveDays ?? 0,
     submissionsPastYear,
+    calendar,
   }
 }
 

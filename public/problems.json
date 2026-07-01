@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-01T07:31:42.490Z",
+  "generatedAt": "2026-07-01T08:03:34.690Z",
   "username": "YqGw1R8NKB",
   "profile": {
     "ranking": 4824571,
@@ -20,7 +20,17 @@
     },
     "streak": 3,
     "totalActiveDays": 8,
-    "submissionsPastYear": 31
+    "submissionsPastYear": 31,
+    "calendar": {
+      "2025-10-04": 11,
+      "2025-10-26": 3,
+      "2025-10-27": 2,
+      "2025-10-28": 2,
+      "2026-04-03": 4,
+      "2026-04-05": 4,
+      "2026-06-23": 3,
+      "2026-06-24": 2
+    }
   },
   "problems": [
     {

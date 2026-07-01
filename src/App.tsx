@@ -4,6 +4,10 @@ import { hasToken } from './lib/github'
 import { shortDate } from './lib/format'
 import StarfieldBackground from './components/StarfieldBackground'
 import StatsBar from './components/StatsBar'
+import Belt from './components/Belt'
+import Heatmap from './components/Heatmap'
+import InterviewProgress from './components/InterviewProgress'
+import PatternsToLearn from './components/PatternsToLearn'
 import Ticker from './components/Ticker'
 import ProblemBoard from './components/ProblemBoard'
 import SettingsModal, { SyncBadge } from './components/SettingsModal'
@@ -23,6 +27,13 @@ export default function App() {
     () => dojo.problems.filter((p) => dojo.get(p.slug, 'revisit') === '1' || dojo.get(p.slug, 'confidence') === 'forgot').length,
     [dojo.problems, dojo.get],
   )
+
+  const solvedSlugs = useMemo(() => new Set(dojo.problems.map((p) => p.slug)), [dojo.problems])
+  const solvedTags = useMemo(() => {
+    const s = new Set<string>()
+    for (const p of dojo.problems) for (const t of p.tags) s.add(t)
+    return s
+  }, [dojo.problems])
 
   return (
     <div className="min-h-screen">
@@ -83,8 +94,18 @@ export default function App() {
           </p>
         ) : (
           <>
-            <StatsBar profile={dojo.profile} problems={dojo.problems} patterns={patternCount} revisitCount={revisitCount} />
-            <div className="mt-7">
+            <Belt solved={dojo.profile.totalSolved} />
+            <div className="mt-4">
+              <StatsBar profile={dojo.profile} problems={dojo.problems} patterns={patternCount} revisitCount={revisitCount} />
+            </div>
+            <div className="mt-4">
+              <Heatmap calendar={dojo.profile.calendar} total={dojo.profile.submissionsPastYear} />
+            </div>
+            <div className="mt-4 grid gap-4 md:grid-cols-2">
+              <InterviewProgress solvedSlugs={solvedSlugs} />
+              <PatternsToLearn solvedTags={solvedTags} />
+            </div>
+            <div className="mt-8">
               <ProblemBoard dojo={dojo} />
             </div>
           </>

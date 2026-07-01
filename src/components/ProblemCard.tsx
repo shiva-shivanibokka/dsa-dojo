@@ -1,6 +1,7 @@
 import type { Problem } from '../data/types'
 import type { Dojo } from '../lib/store'
 import { CONFIDENCE, DIFFICULTY_COLOR, rgb, tagColor } from '../lib/patterns'
+import { companiesFor } from '../data/companies'
 import { ago } from '../lib/format'
 import Select from './Select'
 
@@ -11,6 +12,7 @@ export default function ProblemCard({ problem, dojo }: { problem: Problem; dojo:
   const notes = get(problem.slug, 'notes') || ''
   const diff = DIFFICULTY_COLOR[problem.difficulty]
   const dRgb = rgb(diff)
+  const companies = companiesFor(problem.slug)
 
   return (
     <div
@@ -65,6 +67,21 @@ export default function ProblemCard({ problem, dojo }: { problem: Problem; dojo:
               </span>
             )
           })}
+        </div>
+      )}
+
+      {/* companies (community-sourced "commonly asked at") */}
+      {companies.length > 0 && (
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="font-mono text-[10.5px] font-bold uppercase tracking-wide text-faint">Asked at</span>
+          {companies.map((co) => (
+            <span
+              key={co}
+              className="rounded-md border border-white/12 bg-white/[0.05] px-1.5 py-0.5 font-mono text-[11px] font-semibold text-subtle"
+            >
+              {co}
+            </span>
+          ))}
         </div>
       )}
 

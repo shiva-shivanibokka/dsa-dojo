@@ -12,6 +12,7 @@ const EMPTY_PROFILE: Profile = {
   streak: 0,
   totalActiveDays: 0,
   submissionsPastYear: 0,
+  calendar: {},
 }
 
 function readLocal(): Overrides {

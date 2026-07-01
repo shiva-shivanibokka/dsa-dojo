@@ -25,6 +25,7 @@ export interface Profile {
   streak: number // current streak (days)
   totalActiveDays: number
   submissionsPastYear: number
+  calendar: Record<string, number> // 'YYYY-MM-DD' → submissions that day (past year)
 }
 
 export interface ProblemsFile {
