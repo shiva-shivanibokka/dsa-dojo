@@ -36,10 +36,11 @@ export interface ProblemsFile {
 }
 
 // User-controlled fields, keyed by problem slug.
-export type OverrideKey = 'confidence' | 'revisit' | 'notes'
+export type OverrideKey = 'confidence' | 'revisit' | 'notes' | 'reviewedAt'
 export interface Override {
   confidence?: string // 'solid' | 'shaky' | 'forgot'
   revisit?: string // '1' when flagged
   notes?: string
+  reviewedAt?: string // 'YYYY-MM-DD' of the last time you reviewed it (spaced repetition)
 }
 export type Overrides = Record<string, Override>

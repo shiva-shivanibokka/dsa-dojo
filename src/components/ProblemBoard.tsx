@@ -29,7 +29,7 @@ export default function ProblemBoard({ dojo, focus }: { dojo: Dojo; focus?: { sl
       if (!el) return
       el.scrollIntoView({ behavior: 'smooth', block: 'center' })
       el.classList.add('card-flash')
-      window.setTimeout(() => el.classList.remove('card-flash'), 1500)
+      window.setTimeout(() => el.classList.remove('card-flash'), 3500)
     }, 80)
     return () => window.clearTimeout(t)
     // eslint-disable-next-line react-hooks/exhaustive-deps

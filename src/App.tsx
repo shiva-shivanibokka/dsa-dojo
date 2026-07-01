@@ -9,6 +9,7 @@ import BeltLadder from './components/BeltLadder'
 import Heatmap from './components/Heatmap'
 import InterviewProgress from './components/InterviewProgress'
 import PatternsToLearn from './components/PatternsToLearn'
+import ReviewQueue from './components/ReviewQueue'
 import { BLIND75 } from './data/blind75'
 import { NEETCODE150 } from './data/neetcode150'
 import Ticker from './components/Ticker'
@@ -116,6 +117,9 @@ export default function App() {
             </div>
             <div className="mt-4">
               <PatternsToLearn solvedTags={solvedTags} />
+            </div>
+            <div className="mt-4">
+              <ReviewQueue dojo={dojo} />
             </div>
             <div className="mt-8">
               <ProblemBoard dojo={dojo} focus={focus} />
