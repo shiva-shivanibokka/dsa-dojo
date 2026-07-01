@@ -9,7 +9,7 @@ const RANK: Record<Difficulty, number> = { Easy: 0, Medium: 1, Hard: 2 }
 // box size + problem count, so it auto-resizes as more problems are solved and
 // always fills the space (with a small even margin all around, from the box's
 // own padding).
-export default function SolvedMosaic({ problems }: { problems: Problem[] }) {
+export default function SolvedMosaic({ problems, onPick }: { problems: Problem[]; onPick?: (slug: string) => void }) {
   const ref = useRef<HTMLDivElement>(null)
   const [box, setBox] = useState({ w: 0, h: 0 })
 
@@ -57,9 +57,13 @@ export default function SolvedMosaic({ problems }: { problems: Problem[] }) {
           {sorted.map((p, i) => {
             const c = DIFFICULTY_COLOR[p.difficulty]
             return (
-              <div
+              <button
+                type="button"
                 key={p.slug || i}
-                title={`${p.title} · ${p.difficulty}`}
+                title={`${p.title} · ${p.difficulty} — click to view`}
+                aria-label={`${p.title}, ${p.difficulty}. Click to view in the list below.`}
+                onClick={() => onPick?.(p.slug)}
+                className="cursor-pointer transition hover:brightness-125 hover:ring-2 hover:ring-white/70"
                 style={{
                   width: size,
                   height: size,

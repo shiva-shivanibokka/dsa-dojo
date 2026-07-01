@@ -31,6 +31,9 @@ export default function App() {
     [dojo.problems, dojo.get],
   )
 
+  const [focus, setFocus] = useState<{ slug: string; n: number }>({ slug: '', n: 0 })
+  const pickProblem = (slug: string) => setFocus((f) => ({ slug, n: f.n + 1 }))
+
   const solvedSlugs = useMemo(() => new Set(dojo.problems.map((p) => p.slug)), [dojo.problems])
   const solvedTags = useMemo(() => {
     const s = new Set<string>()
@@ -102,7 +105,7 @@ export default function App() {
               <BeltLadder solved={dojo.profile.totalSolved} />
             </div>
             <div className="mt-4">
-              <StatsBar profile={dojo.profile} problems={dojo.problems} patterns={patternCount} revisitCount={revisitCount} />
+              <StatsBar profile={dojo.profile} problems={dojo.problems} patterns={patternCount} revisitCount={revisitCount} onPick={pickProblem} />
             </div>
             <div className="mt-4">
               <Heatmap calendar={dojo.profile.calendar} total={dojo.profile.submissionsPastYear} />
@@ -115,7 +118,7 @@ export default function App() {
               <PatternsToLearn solvedTags={solvedTags} />
             </div>
             <div className="mt-8">
-              <ProblemBoard dojo={dojo} />
+              <ProblemBoard dojo={dojo} focus={focus} />
             </div>
           </>
         )}

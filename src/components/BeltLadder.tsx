@@ -15,20 +15,19 @@ export default function BeltLadder({ solved }: { solved: number }) {
           const reached = solved >= b.min
           const earned = reached && !active // belts you've crossed → solid glowing border
 
-          const style: Record<string, string | undefined> = { '--belt': b.color }
-          if (active) {
-            style.background = `${b.color}1f`
-          } else if (earned) {
+          const style: Record<string, string | undefined> = {}
+          if (earned) {
+            // belts you've crossed → steady solid border in their own colour
             style.borderColor = b.color
             style.boxShadow = `0 0 14px -4px ${b.color}`
-          } else {
+          } else if (!active) {
             style.borderColor = 'rgba(255,255,255,0.08)'
           }
 
           return (
             <div
               key={b.name}
-              className={`flex min-w-[96px] flex-1 flex-col items-center gap-2 rounded-xl border px-2 py-3 ${active ? 'belt-pulse' : ''}`}
+              className={`flex min-w-[96px] flex-1 flex-col items-center gap-2 rounded-xl border px-2 py-3 ${active ? 'belt-current' : ''}`}
               style={style as CSSProperties}
             >
               <span

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { Difficulty } from '../data/types'
 import type { Dojo } from '../lib/store'
 import { DIFFICULTY_COLOR, DIFFICULTY_ORDER, rgb, tagColor } from '../lib/patterns'
@@ -6,7 +6,7 @@ import ProblemCard from './ProblemCard'
 
 type SortKey = 'recent' | 'difficulty' | 'id'
 
-export default function ProblemBoard({ dojo }: { dojo: Dojo }) {
+export default function ProblemBoard({ dojo, focus }: { dojo: Dojo; focus?: { slug: string; n: number } }) {
   const { problems, get } = dojo
   const [q, setQ] = useState('')
   const [diff, setDiff] = useState<Difficulty | 'all'>('all')
@@ -14,6 +14,26 @@ export default function ProblemBoard({ dojo }: { dojo: Dojo }) {
   const [onlyRevisit, setOnlyRevisit] = useState(false)
   const [sort, setSort] = useState<SortKey>('recent')
   const [grouped, setGrouped] = useState(false)
+
+  // When a mosaic square is clicked, clear any active filters (so the card is
+  // rendered and unique), then smooth-scroll to it and flash it.
+  useEffect(() => {
+    if (!focus?.slug) return
+    setQ('')
+    setDiff('all')
+    setPattern('all')
+    setOnlyRevisit(false)
+    setGrouped(false)
+    const t = window.setTimeout(() => {
+      const el = document.querySelector<HTMLElement>(`[data-slug="${CSS.escape(focus.slug)}"]`)
+      if (!el) return
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      el.classList.add('card-flash')
+      window.setTimeout(() => el.classList.remove('card-flash'), 1500)
+    }, 80)
+    return () => window.clearTimeout(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focus?.n])
 
   const diffCounts = useMemo(() => {
     const c: Record<string, number> = { Easy: 0, Medium: 0, Hard: 0 }

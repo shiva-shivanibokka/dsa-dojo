@@ -16,6 +16,7 @@ export default function ProblemCard({ problem, dojo }: { problem: Problem; dojo:
 
   return (
     <div
+      data-slug={problem.slug}
       className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4 shadow-card backdrop-blur-md transition hover:-translate-y-0.5 hover:border-white/20"
       style={{ boxShadow: `inset 3px 0 0 0 rgba(${dRgb},0.9)` }}
     >

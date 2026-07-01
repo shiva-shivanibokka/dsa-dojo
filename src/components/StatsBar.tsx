@@ -10,18 +10,20 @@ export default function StatsBar({
   problems,
   patterns,
   revisitCount,
+  onPick,
 }: {
   profile: Profile
   problems: Problem[]
   patterns: number
   revisitCount: number
+  onPick?: (slug: string) => void
 }) {
   return (
     <div className="flex flex-col gap-4">
       {/* top row: solved mosaic (2/3) · three boxes stacked (1/3) */}
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="h-[264px] rounded-2xl border border-white/10 bg-white/[0.04] p-2.5 shadow-card backdrop-blur-md sm:col-span-2">
-          <SolvedMosaic problems={problems} />
+          <SolvedMosaic problems={problems} onPick={onPick} />
         </div>
         <div className="grid grid-rows-3 gap-4">
           <Tile value={`🔥 ${profile.streak}`} label="Day streak" rgb="251,191,36" />
