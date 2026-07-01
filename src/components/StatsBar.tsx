@@ -15,12 +15,12 @@ export default function StatsBar({
 }) {
   return (
     <div className="flex flex-col gap-4">
-      {/* top row: BIG circle + small boxes beside it */}
-      <div className="grid gap-4 sm:grid-cols-[minmax(0,250px)_1fr]">
-        <div className="flex items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] py-5 shadow-card backdrop-blur-md">
-          <DifficultyRing profile={profile} size={190} />
+      {/* top row: BIG circle (2/3) + three small boxes stacked vertically (1/3) */}
+      <div className="grid gap-4 sm:grid-cols-3">
+        <div className="flex items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] py-6 shadow-card backdrop-blur-md sm:col-span-2">
+          <DifficultyRing profile={profile} size={230} />
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-rows-3 gap-4">
           <Tile value={`🔥 ${profile.streak}`} label="Day streak" rgb="251,191,36" />
           <Tile value={patterns} label="Patterns" rgb="167,139,250" />
           <Tile value={revisitCount} label="To revisit" rgb="244,114,182" />
@@ -72,16 +72,16 @@ function Bar({ d, solved, total }: { d: Difficulty; solved: number; total: numbe
 function Tile({ value, label, rgb }: { value: string | number; label: string; rgb: string }) {
   return (
     <div
-      className="flex flex-col items-center justify-center rounded-2xl border px-3 py-4 text-center backdrop-blur-md"
+      className="flex items-center justify-center gap-3 rounded-2xl border px-4 backdrop-blur-md"
       style={{ borderColor: `rgba(${rgb},0.35)`, background: `rgba(${rgb},0.10)`, boxShadow: `0 0 30px -14px rgba(${rgb},0.8)` }}
     >
       <div
-        className="font-display text-[30px] font-extrabold leading-none text-ink"
+        className="font-display text-[28px] font-extrabold leading-none text-ink"
         style={{ textShadow: `0 0 18px rgba(${rgb},0.55)` }}
       >
         {value}
       </div>
-      <div className="mt-2 font-mono text-[11.5px] font-bold uppercase tracking-wide text-muted">{label}</div>
+      <div className="font-mono text-[11.5px] font-bold uppercase leading-tight tracking-wide text-muted">{label}</div>
     </div>
   )
 }
