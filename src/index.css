@@ -53,3 +53,26 @@ body {
     animation: none;
   }
 }
+
+/* Pulsing glow for the current belt in the ladder (colour via --belt var) */
+@keyframes beltPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 9px -2px var(--belt);
+    border-color: color-mix(in srgb, var(--belt) 70%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 26px 3px var(--belt);
+    border-color: var(--belt);
+  }
+}
+.belt-pulse {
+  animation: beltPulse 1.8s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .belt-pulse {
+    animation: none;
+    box-shadow: 0 0 16px -4px var(--belt);
+    border-color: var(--belt);
+  }
+}
