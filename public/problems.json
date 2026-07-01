@@ -1,0 +1,226 @@
+{
+  "generatedAt": "2026-07-01T04:48:37.167Z",
+  "username": "YqGw1R8NKB",
+  "profile": {
+    "ranking": 4824571,
+    "totalSolved": 15,
+    "byDifficulty": {
+      "Easy": {
+        "solved": 12,
+        "total": 951
+      },
+      "Medium": {
+        "solved": 3,
+        "total": 2077
+      },
+      "Hard": {
+        "solved": 0,
+        "total": 949
+      }
+    },
+    "streak": 3,
+    "totalActiveDays": 8,
+    "submissionsPastYear": 31
+  },
+  "problems": [
+    {
+      "id": 49,
+      "slug": "group-anagrams",
+      "title": "Group Anagrams",
+      "difficulty": "Medium",
+      "tags": [
+        "Array",
+        "Hash Table",
+        "String",
+        "Sorting"
+      ],
+      "url": "https://leetcode.com/problems/group-anagrams/",
+      "solvedAt": "2026-06-24T18:00:41.000Z"
+    },
+    {
+      "id": 350,
+      "slug": "intersection-of-two-arrays-ii",
+      "title": "Intersection of Two Arrays II",
+      "difficulty": "Easy",
+      "tags": [
+        "Array",
+        "Hash Table",
+        "Two Pointers",
+        "Binary Search",
+        "Sorting"
+      ],
+      "url": "https://leetcode.com/problems/intersection-of-two-arrays-ii/",
+      "solvedAt": "2026-04-05T18:29:23.000Z"
+    },
+    {
+      "id": 392,
+      "slug": "is-subsequence",
+      "title": "Is Subsequence",
+      "difficulty": "Easy",
+      "tags": [
+        "Two Pointers",
+        "String",
+        "Dynamic Programming"
+      ],
+      "url": "https://leetcode.com/problems/is-subsequence/",
+      "solvedAt": "2026-04-05T18:21:28.000Z"
+    },
+    {
+      "id": 88,
+      "slug": "merge-sorted-array",
+      "title": "Merge Sorted Array",
+      "difficulty": "Easy",
+      "tags": [
+        "Array",
+        "Two Pointers",
+        "Sorting"
+      ],
+      "url": "https://leetcode.com/problems/merge-sorted-array/",
+      "solvedAt": "2026-04-05T18:17:04.000Z"
+    },
+    {
+      "id": 344,
+      "slug": "reverse-string",
+      "title": "Reverse String",
+      "difficulty": "Easy",
+      "tags": [
+        "Two Pointers",
+        "String"
+      ],
+      "url": "https://leetcode.com/problems/reverse-string/",
+      "solvedAt": "2026-04-05T17:45:28.000Z"
+    },
+    {
+      "id": 26,
+      "slug": "remove-duplicates-from-sorted-array",
+      "title": "Remove Duplicates from Sorted Array",
+      "difficulty": "Easy",
+      "tags": [
+        "Array",
+        "Two Pointers"
+      ],
+      "url": "https://leetcode.com/problems/remove-duplicates-from-sorted-array/",
+      "solvedAt": "2026-04-03T19:16:12.000Z"
+    },
+    {
+      "id": 125,
+      "slug": "valid-palindrome",
+      "title": "Valid Palindrome",
+      "difficulty": "Easy",
+      "tags": [
+        "Two Pointers",
+        "String"
+      ],
+      "url": "https://leetcode.com/problems/valid-palindrome/",
+      "solvedAt": "2026-04-03T19:13:15.000Z"
+    },
+    {
+      "id": 167,
+      "slug": "two-sum-ii-input-array-is-sorted",
+      "title": "Two Sum II - Input Array Is Sorted",
+      "difficulty": "Medium",
+      "tags": [
+        "Array",
+        "Two Pointers",
+        "Binary Search"
+      ],
+      "url": "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/",
+      "solvedAt": "2026-04-03T19:07:34.000Z"
+    },
+    {
+      "id": 912,
+      "slug": "sort-an-array",
+      "title": "Sort an Array",
+      "difficulty": "Medium",
+      "tags": [
+        "Array",
+        "Divide and Conquer",
+        "Sorting",
+        "Heap (Priority Queue)",
+        "Merge Sort",
+        "Bucket Sort",
+        "Radix Sort",
+        "Counting Sort"
+      ],
+      "url": "https://leetcode.com/problems/sort-an-array/",
+      "solvedAt": "2025-10-28T17:04:55.000Z"
+    },
+    {
+      "id": 705,
+      "slug": "design-hashset",
+      "title": "Design HashSet",
+      "difficulty": "Easy",
+      "tags": [
+        "Array",
+        "Hash Table",
+        "Linked List",
+        "Design",
+        "Hash Function"
+      ],
+      "url": "https://leetcode.com/problems/design-hashset/",
+      "solvedAt": "2025-10-28T14:31:21.000Z"
+    },
+    {
+      "id": 27,
+      "slug": "remove-element",
+      "title": "Remove Element",
+      "difficulty": "Easy",
+      "tags": [
+        "Array",
+        "Two Pointers"
+      ],
+      "url": "https://leetcode.com/problems/remove-element/",
+      "solvedAt": "2025-10-27T14:52:54.000Z"
+    },
+    {
+      "id": 242,
+      "slug": "valid-anagram",
+      "title": "Valid Anagram",
+      "difficulty": "Easy",
+      "tags": [
+        "Hash Table",
+        "String",
+        "Sorting"
+      ],
+      "url": "https://leetcode.com/problems/valid-anagram/",
+      "solvedAt": "2025-10-26T23:49:49.000Z"
+    },
+    {
+      "id": 217,
+      "slug": "contains-duplicate",
+      "title": "Contains Duplicate",
+      "difficulty": "Easy",
+      "tags": [
+        "Array",
+        "Hash Table",
+        "Sorting"
+      ],
+      "url": "https://leetcode.com/problems/contains-duplicate/",
+      "solvedAt": "2025-10-26T23:29:46.000Z"
+    },
+    {
+      "id": 1929,
+      "slug": "concatenation-of-array",
+      "title": "Concatenation of Array",
+      "difficulty": "Easy",
+      "tags": [
+        "Array",
+        "Simulation"
+      ],
+      "url": "https://leetcode.com/problems/concatenation-of-array/",
+      "solvedAt": "2025-10-26T23:28:24.000Z"
+    },
+    {
+      "id": 1,
+      "slug": "two-sum",
+      "title": "Two Sum",
+      "difficulty": "Easy",
+      "tags": [
+        "Array",
+        "Hash Table"
+      ],
+      "url": "https://leetcode.com/problems/two-sum/",
+      "solvedAt": "2025-10-04T20:57:43.000Z"
+    }
+  ]
+}

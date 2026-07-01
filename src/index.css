@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: #fbf6ea;
+  /* Dotted paper — the signature neo-brutalist backdrop */
+  background-image: radial-gradient(rgba(20, 18, 16, 0.14) 1.3px, transparent 1.3px);
+  background-size: 18px 18px;
+  color: #141210;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Chunky ink scrollbar to match the borders */
+*::-webkit-scrollbar {
+  height: 12px;
+  width: 12px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: #141210;
+  border-radius: 0;
+  border: 3px solid #fbf6ea;
+}
+
+/* Marquee ticker */
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+.animate-ticker {
+  animation: ticker 34s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-ticker {
+    animation: none;
+  }
+}
