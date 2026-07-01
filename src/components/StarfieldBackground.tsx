@@ -62,8 +62,8 @@ export default function StarfieldBackground() {
       ctx.globalAlpha = 1
 
       if (!reduce) {
-        if (Math.random() < 0.018) {
-          meteors.push({ x: Math.random() * w * 0.6, y: -20, len: 130 + Math.random() * 90, sp: 7 + Math.random() * 4 })
+        if (Math.random() < 0.055) {
+          meteors.push({ x: Math.random() * w * 0.85, y: -20, len: 130 + Math.random() * 90, sp: 7 + Math.random() * 4 })
         }
         for (const m of meteors) {
           m.x += m.sp

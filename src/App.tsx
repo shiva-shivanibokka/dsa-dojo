@@ -32,7 +32,7 @@ export default function App() {
       <header className="sticky top-0 z-20 border-b border-white/10 bg-canvas/70 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-2 px-5 py-4">
           <div className="flex items-center gap-3.5">
-            <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-accent-indigo to-accent-cyan text-[28px] shadow-glow">
+            <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-accent-indigo to-accent-cyan text-[38px] leading-none shadow-glow">
               🥋
             </span>
             <div>
