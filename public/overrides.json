@@ -2,7 +2,7 @@
   "two-sum": {
     "reviewedAt": "2026-07-01",
     "confidence": "shaky",
-    "notes": "use hashing (dict), if the complement is in the dict, then return "
+    "notes": "use hashing (dict), if the complement is in the dict, then return  its value and the index of the current number, else store the num in the dict with its index, use enumerate function"
   },
   "remove-element": {
     "reviewedAt": "2026-07-01"
