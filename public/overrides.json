@@ -6,7 +6,9 @@
   },
   "remove-element": {
     "reviewedAt": "2026-07-01",
-    "confidence": "solid"
+    "confidence": "solid",
+    "notes": "removing does not mean removing it from the array.  just replace it, count the first k elements which are not val",
+    "revisit": "1"
   },
   "contains-duplicate": {
     "notes": "use a set to store the numbers, if the number is already in the set, then its a duplicate",
