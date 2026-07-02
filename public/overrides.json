@@ -22,5 +22,10 @@
   "concatenation-of-array": {
     "confidence": "solid",
     "notes": "just add the two arrays but dont forget to use the return keyword"
+  },
+  "majority-element": {
+    "notes": "you can use hashing but that gives O(n) time so you can use the Boyer Moore method",
+    "revisit": "1",
+    "confidence": "shaky"
   }
 }
