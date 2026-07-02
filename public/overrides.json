@@ -32,5 +32,8 @@
     "revisit": "1",
     "confidence": "shaky",
     "notes": "this is very very important. you need to learn and understand this daily till you get it permanently. This stores only keys (not key-value pairs like a hashmap)"
+  },
+  "design-hashmap": {
+    "notes": "this is very important. you need to learn and understand this dialy till you get it permanently. this stores key-value pairs (unlike just keys in a hashset)"
   }
 }
