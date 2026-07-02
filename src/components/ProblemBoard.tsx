@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import type { Difficulty } from '../data/types'
 import type { Dojo } from '../lib/store'
 import { DIFFICULTY_COLOR, DIFFICULTY_ORDER, rgb, tagColor } from '../lib/patterns'
+import { isRevisit } from '../lib/revisit'
 import ProblemCard from './ProblemCard'
 
 type SortKey = 'recent' | 'difficulty' | 'id'
@@ -47,7 +48,7 @@ export default function ProblemBoard({ dojo, focus }: { dojo: Dojo; focus?: { sl
     return Object.entries(c).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
   }, [problems])
 
-  const needsRevisit = (slug: string) => get(slug, 'revisit') === '1' || get(slug, 'confidence') === 'forgot'
+  const needsRevisit = (slug: string) => isRevisit(get, slug)
   const revisitCount = useMemo(
     () => problems.filter((p) => needsRevisit(p.slug)).length,
     [problems, get], // eslint-disable-line react-hooks/exhaustive-deps

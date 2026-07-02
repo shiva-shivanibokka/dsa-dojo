@@ -15,7 +15,7 @@ export default function InterviewProgress({
   const [open, setOpen] = useState(false)
   const done = items.filter((p) => solvedSlugs.has(p.slug)).length
   const total = items.length
-  const pct = Math.round((done / total) * 100)
+  const pct = total ? Math.round((done / total) * 100) : 0
   const remaining = items.filter((p) => !solvedSlugs.has(p.slug))
 
   return (

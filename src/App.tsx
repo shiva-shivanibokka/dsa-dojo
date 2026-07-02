@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { useDojo } from './lib/store'
 import { hasToken } from './lib/github'
 import { shortDate } from './lib/format'
+import { isRevisit } from './lib/revisit'
 import StarfieldBackground from './components/StarfieldBackground'
 import StatsBar from './components/StatsBar'
 import Belt from './components/Belt'
@@ -23,14 +24,8 @@ export default function App() {
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [tokenOn, setTokenOn] = useState(hasToken())
 
-  const patternCount = useMemo(() => {
-    const s = new Set<string>()
-    for (const p of dojo.problems) for (const t of p.tags) s.add(t)
-    return s.size
-  }, [dojo.problems])
-
   const revisitCount = useMemo(
-    () => dojo.problems.filter((p) => dojo.get(p.slug, 'revisit') === '1' || dojo.get(p.slug, 'confidence') === 'forgot').length,
+    () => dojo.problems.filter((p) => isRevisit(dojo.get, p.slug)).length,
     [dojo.problems, dojo.get],
   )
 
@@ -43,6 +38,7 @@ export default function App() {
     for (const p of dojo.problems) for (const t of p.tags) s.add(t)
     return s
   }, [dojo.problems])
+  const patternCount = solvedTags.size
 
   return (
     <div className="min-h-screen">

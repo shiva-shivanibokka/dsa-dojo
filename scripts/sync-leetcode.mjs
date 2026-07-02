@@ -104,58 +104,85 @@ const Q_QUESTION = `
 function readExisting() {
   try {
     const j = JSON.parse(fs.readFileSync(OUT, 'utf8'))
-    return Array.isArray(j.problems) ? j.problems : []
+    return {
+      problems: Array.isArray(j.problems) ? j.problems : [],
+      profile: j.profile && typeof j.profile === 'object' ? j.profile : null,
+    }
   } catch {
-    return []
+    return { problems: [], profile: null }
   }
 }
 
-function buildProfile(profileData, calendarData) {
-  const empty = { Easy: { solved: 0, total: 0 }, Medium: { solved: 0, total: 0 }, Hard: { solved: 0, total: 0 } }
-  const byDifficulty = { ...empty }
-  let totalSolved = 0
-  let ranking = null
+// Build the profile from whatever queries succeeded, falling back to the prior
+// on-disk profile for any slice whose query returned null. This means a failed
+// profile OR calendar query preserves the last good stats instead of zeroing
+// them — each slice is only replaced when its own query genuinely succeeded.
+function buildProfile(profileData, calendarData, prior) {
+  const emptyByDiff = { Easy: { solved: 0, total: 0 }, Medium: { solved: 0, total: 0 }, Hard: { solved: 0, total: 0 } }
 
   const mu = profileData?.matchedUser
-  if (mu) {
-    ranking = mu.profile?.ranking ?? null
-    for (const row of mu.submitStatsGlobal?.acSubmissionNum || []) {
-      if (row.difficulty === 'All') {
-        totalSolved = row.count
-        continue
+  let profileSlice
+  if (profileData) {
+    const byDifficulty = { ...emptyByDiff }
+    let totalSolved = 0
+    let ranking = null
+    if (mu) {
+      ranking = mu.profile?.ranking ?? null
+      for (const row of mu.submitStatsGlobal?.acSubmissionNum || []) {
+        if (row.difficulty === 'All') {
+          totalSolved = row.count
+          continue
+        }
+        if (byDifficulty[row.difficulty]) byDifficulty[row.difficulty].solved = row.count
       }
-      if (byDifficulty[row.difficulty]) byDifficulty[row.difficulty].solved = row.count
     }
-  }
-  for (const row of profileData?.allQuestionsCount || []) {
-    if (byDifficulty[row.difficulty]) byDifficulty[row.difficulty].total = row.count
+    for (const row of profileData.allQuestionsCount || []) {
+      if (byDifficulty[row.difficulty]) byDifficulty[row.difficulty].total = row.count
+    }
+    profileSlice = { ranking, totalSolved, byDifficulty }
+  } else {
+    // profile query failed — keep whatever we last had on disk
+    profileSlice = {
+      ranking: prior?.ranking ?? null,
+      totalSolved: prior?.totalSolved ?? 0,
+      byDifficulty: prior?.byDifficulty ?? { ...emptyByDiff },
+    }
   }
 
   const cal = calendarData?.matchedUser?.userCalendar
-  let submissionsPastYear = 0
-  const calendar = {} // 'YYYY-MM-DD' → count
-  if (cal?.submissionCalendar) {
-    try {
-      const map = JSON.parse(cal.submissionCalendar)
-      for (const [ts, count] of Object.entries(map)) {
-        submissionsPastYear += Number(count)
-        const day = new Date(Number(ts) * 1000).toISOString().slice(0, 10)
-        calendar[day] = (calendar[day] || 0) + Number(count)
+  let calendarSlice
+  if (cal) {
+    let submissionsPastYear = 0
+    const calendar = {} // 'YYYY-MM-DD' → count
+    if (cal.submissionCalendar) {
+      try {
+        const map = JSON.parse(cal.submissionCalendar)
+        for (const [ts, count] of Object.entries(map)) {
+          submissionsPastYear += Number(count)
+          const day = new Date(Number(ts) * 1000).toISOString().slice(0, 10)
+          calendar[day] = (calendar[day] || 0) + Number(count)
+        }
+      } catch {
+        /* ignore */
       }
-    } catch {
-      /* ignore */
+    }
+    calendarSlice = {
+      streak: cal.streak ?? 0,
+      totalActiveDays: cal.totalActiveDays ?? 0,
+      submissionsPastYear,
+      calendar,
+    }
+  } else {
+    // calendar query failed — keep the last good streak/calendar
+    calendarSlice = {
+      streak: prior?.streak ?? 0,
+      totalActiveDays: prior?.totalActiveDays ?? 0,
+      submissionsPastYear: prior?.submissionsPastYear ?? 0,
+      calendar: prior?.calendar ?? {},
     }
   }
 
-  return {
-    ranking,
-    totalSolved,
-    byDifficulty,
-    streak: cal?.streak ?? 0,
-    totalActiveDays: cal?.totalActiveDays ?? 0,
-    submissionsPastYear,
-    calendar,
-  }
+  return { ...profileSlice, ...calendarSlice }
 }
 
 async function main() {
@@ -167,14 +194,18 @@ async function main() {
     gql(Q_RECENT, { username: USER, limit: LIMIT }),
   ])
 
-  const profile = buildProfile(profileData, calendarData)
+  const priorData = readExisting()
+
+  const profile = buildProfile(profileData, calendarData, priorData.profile)
+  if (!profileData) console.warn('  ! profile query failed — preserving prior profile stats')
+  if (!calendarData) console.warn('  ! calendar query failed — preserving prior streak/calendar')
   console.log(
     `  profile: ${profile.totalSolved} solved (E${profile.byDifficulty.Easy.solved}/M${profile.byDifficulty.Medium.solved}/H${profile.byDifficulty.Hard.solved}) · streak ${profile.streak}`,
   )
 
   // accumulate: keep everything we already have, keyed by slug
   const bySlug = new Map()
-  for (const p of readExisting()) bySlug.set(p.slug, p)
+  for (const p of priorData.problems) bySlug.set(p.slug, p)
 
   const recent = recentData?.recentAcSubmissionList || []
   console.log(`  recent accepted returned: ${recent.length}`)
@@ -185,24 +216,31 @@ async function main() {
     const solvedAt = sub.timestamp ? new Date(Number(sub.timestamp) * 1000).toISOString() : null
     const existing = bySlug.get(slug)
 
+    // A prior run may have stored this slug with fallback data (id:0, empty tags,
+    // difficulty:'Medium') because its Q_QUESTION fetch failed. Treat that as
+    // un-enriched and re-attempt enrichment on later runs — only a fully-enriched
+    // entry is skipped, so a transient failure isn't baked in forever.
+    const enriched = (e) => e && e.id !== 0 && Array.isArray(e.tags) && e.tags.length > 0
+
     // keep the earliest solvedAt we've seen; enrich tags/difficulty once.
     if (existing) {
       if (solvedAt && (!existing.solvedAt || solvedAt < existing.solvedAt)) existing.solvedAt = solvedAt
-      continue
+      if (enriched(existing)) continue
     }
 
     const qd = await gql(Q_QUESTION, { titleSlug: slug })
     const q = qd?.question
+    if (!q && existing) continue // enrichment still failing — keep the existing fallback, don't crash
     bySlug.set(slug, {
       id: q ? Number(q.questionFrontendId) : 0,
       slug,
-      title: sub.title || q?.title || slug,
-      difficulty: q?.difficulty || 'Medium',
+      title: sub.title || q?.title || existing?.title || slug,
+      difficulty: q?.difficulty || existing?.difficulty || 'Medium',
       tags: (q?.topicTags || []).map((t) => t.name),
       url: `https://leetcode.com/problems/${slug}/`,
-      solvedAt,
+      solvedAt: existing?.solvedAt ?? solvedAt,
     })
-    added++
+    if (!existing) added++
     await sleep(250) // be gentle with the endpoint
   }
 

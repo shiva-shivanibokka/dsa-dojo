@@ -2,7 +2,9 @@
 // category (pattern) and difficulty (Easy / Medium / Hard). Matching against your
 // solved problems is by slug, so anything you've solved on LeetCode shows as done.
 
-export type Diff = 'Easy' | 'Medium' | 'Hard'
+import type { Difficulty as Diff } from './types'
+export type { Difficulty as Diff } from './types'
+
 export interface RoadmapProblem {
   slug: string
   title: string

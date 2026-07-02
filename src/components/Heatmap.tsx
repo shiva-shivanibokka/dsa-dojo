@@ -2,6 +2,16 @@ const WEEKS = 53
 const CELL = 12
 const GAP = 3
 
+// Local 'YYYY-MM-DD' from the calendar-day parts. Cell position, label and this
+// lookup key all use the same local day, so a submission never lands one cell off
+// for users away from UTC (toISOString would shift the key into the wrong day).
+function localKey(date: Date): string {
+  const y = date.getFullYear()
+  const mm = String(date.getMonth() + 1).padStart(2, '0')
+  const dd = String(date.getDate()).padStart(2, '0')
+  return `${y}-${mm}-${dd}`
+}
+
 function cellColor(count: number): string {
   if (count <= 0) return 'rgba(255,255,255,0.05)'
   if (count < 3) return 'rgba(52,211,153,0.35)'
@@ -28,7 +38,7 @@ export default function Heatmap({ calendar, total }: { calendar: Record<string, 
         col.push(null)
         continue
       }
-      const key = date.toISOString().slice(0, 10)
+      const key = localKey(date)
       const count = calendar[key] || 0
       col.push({ key, count, label: `${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} · ${count} submission${count === 1 ? '' : 's'}` })
     }
