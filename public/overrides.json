@@ -4,5 +4,8 @@
   },
   "remove-element": {
     "reviewedAt": "2026-07-01"
+  },
+  "contains-duplicate": {
+    "notes": "use a set to store the numbers, if the number is already in the set, then"
   }
 }
