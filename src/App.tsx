@@ -16,6 +16,7 @@ import { NEETCODE250 } from './data/neetcode250'
 import Ticker from './components/Ticker'
 import ProblemBoard from './components/ProblemBoard'
 import SettingsModal, { SyncBadge } from './components/SettingsModal'
+import SyncNow from './components/SyncNow'
 
 export default function App() {
   const dojo = useDojo()
@@ -71,6 +72,7 @@ export default function App() {
               </span>
             )}
             <SyncBadge state={dojo.syncState} onManual={dojo.syncNow} />
+            <SyncNow />
             <button
               onClick={() => (tokenOn ? dojo.syncNow() : dojo.exportOverrides())}
               className="rounded-xl bg-gradient-to-r from-accent-indigo to-accent-cyan px-4 py-2.5 text-[14px] font-bold text-canvas shadow-glow transition hover:-translate-y-0.5"

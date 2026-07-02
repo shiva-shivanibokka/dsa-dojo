@@ -77,3 +77,31 @@ export async function commitJson(path: string, data: unknown, message: string): 
 }
 
 export type SyncState = 'idle' | 'saving' | 'saved' | 'error' | 'off'
+
+// --- On-demand LeetCode sync -------------------------------------------------
+// Kick off the deploy workflow (LeetCode sync + rebuild) from the page. Needs the
+// token to also have Actions: Read and write.
+export async function dispatchSync(): Promise<{ ok: boolean; message: string }> {
+  const token = getToken()
+  if (!token) return { ok: false, message: 'Add a token first (settings)' }
+  const r = await fetch(`${API}/repos/${OWNER}/${REPO}/actions/workflows/deploy.yml/dispatches`, {
+    method: 'POST',
+    headers: authHeaders(token),
+    body: JSON.stringify({ ref: 'main' }),
+  })
+  if (r.status === 204) return { ok: true, message: 'Sync started' }
+  if (r.status === 403) return { ok: false, message: 'Token needs Actions: read & write' }
+  if (r.status === 401) return { ok: false, message: 'Invalid token' }
+  if (r.status === 404) return { ok: false, message: 'No access to the workflow' }
+  return { ok: false, message: `GitHub error ${r.status}` }
+}
+
+export async function latestRun(): Promise<{ id: number; status: string; conclusion: string | null } | null> {
+  const token = getToken()
+  if (!token) return null
+  const r = await fetch(`${API}/repos/${OWNER}/${REPO}/actions/runs?per_page=1`, { headers: authHeaders(token) })
+  if (!r.ok) return null
+  const j = await r.json()
+  const run = j.workflow_runs?.[0]
+  return run ? { id: run.id, status: run.status, conclusion: run.conclusion } : null
+}
