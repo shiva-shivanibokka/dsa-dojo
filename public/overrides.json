@@ -31,6 +31,6 @@
   "design-hashset": {
     "revisit": "1",
     "confidence": "shaky",
-    "notes": "this is very very important. you need to learn and understand this daily till you get it permanently. This stores only keys (not key-value pairs like"
+    "notes": "this is very very important. you need to learn and understand this daily till you get it permanently. This stores only keys (not key-value pairs like a hashmap)"
   }
 }
