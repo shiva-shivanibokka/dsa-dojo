@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-07-02T04:06:09.013Z",
+  "generatedAt": "2026-07-02T04:57:03.956Z",
   "username": "YqGw1R8NKB",
   "profile": {
     "ranking": 4827973,
-    "totalSolved": 16,
+    "totalSolved": 17,
     "byDifficulty": {
       "Easy": {
-        "solved": 13,
+        "solved": 14,
         "total": 951
       },
       "Medium": {
@@ -20,7 +20,7 @@
     },
     "streak": 3,
     "totalActiveDays": 9,
-    "submissionsPastYear": 36,
+    "submissionsPastYear": 37,
     "calendar": {
       "2025-10-04": 11,
       "2025-10-26": 3,
@@ -30,10 +30,25 @@
       "2026-04-05": 4,
       "2026-06-23": 3,
       "2026-06-24": 2,
-      "2026-07-02": 5
+      "2026-07-02": 6
     }
   },
   "problems": [
+    {
+      "id": 706,
+      "slug": "design-hashmap",
+      "title": "Design HashMap",
+      "difficulty": "Easy",
+      "tags": [
+        "Array",
+        "Hash Table",
+        "Linked List",
+        "Design",
+        "Hash Function"
+      ],
+      "url": "https://leetcode.com/problems/design-hashmap/",
+      "solvedAt": "2026-07-02T04:56:17.000Z"
+    },
     {
       "id": 169,
       "slug": "majority-element",
