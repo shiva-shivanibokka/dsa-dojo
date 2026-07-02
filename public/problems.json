@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-07-02T03:45:21.377Z",
+  "generatedAt": "2026-07-02T03:54:31.838Z",
   "username": "YqGw1R8NKB",
   "profile": {
     "ranking": 4827973,
-    "totalSolved": 15,
+    "totalSolved": 16,
     "byDifficulty": {
       "Easy": {
-        "solved": 12,
+        "solved": 13,
         "total": 951
       },
       "Medium": {
@@ -20,7 +20,7 @@
     },
     "streak": 3,
     "totalActiveDays": 9,
-    "submissionsPastYear": 34,
+    "submissionsPastYear": 35,
     "calendar": {
       "2025-10-04": 11,
       "2025-10-26": 3,
@@ -30,10 +30,25 @@
       "2026-04-05": 4,
       "2026-06-23": 3,
       "2026-06-24": 2,
-      "2026-07-02": 3
+      "2026-07-02": 4
     }
   },
   "problems": [
+    {
+      "id": 169,
+      "slug": "majority-element",
+      "title": "Majority Element",
+      "difficulty": "Easy",
+      "tags": [
+        "Array",
+        "Hash Table",
+        "Divide and Conquer",
+        "Sorting",
+        "Counting"
+      ],
+      "url": "https://leetcode.com/problems/majority-element/",
+      "solvedAt": "2026-07-02T03:46:53.000Z"
+    },
     {
       "id": 49,
       "slug": "group-anagrams",
