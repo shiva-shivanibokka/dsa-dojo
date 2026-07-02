@@ -94,18 +94,34 @@ export function useDojo(): Dojo {
   }, [])
 
   const effective = useMemo(() => merge(baseline, local), [baseline, local])
-  const get = useCallback((slug: string, key: OverrideKey) => effective[slug]?.[key], [effective])
+  const get = useCallback(
+    (slug: string, key: OverrideKey) => {
+      const v = effective[slug]?.[key]
+      return v === '' ? undefined : v // '' is a tombstone → read as unset
+    },
+    [effective],
+  )
 
-  const set = useCallback((slug: string, key: OverrideKey, value: string | undefined) => {
-    setLocal((prev) => {
-      const next: Overrides = { ...prev, [slug]: { ...(prev[slug] || {}) } }
-      if (value === undefined || value === '') delete next[slug][key]
-      else next[slug][key] = value
-      if (Object.keys(next[slug]).length === 0) delete next[slug]
-      writeLocal(next)
-      return next
-    })
-  }, [])
+  const set = useCallback(
+    (slug: string, key: OverrideKey, value: string | undefined) => {
+      setLocal((prev) => {
+        const next: Overrides = { ...prev, [slug]: { ...(prev[slug] || {}) } }
+        if (value === undefined || value === '') {
+          // If the value exists in the committed baseline, write an empty-string
+          // tombstone so the clear actually overrides it; otherwise just drop it.
+          const b = baseline[slug]?.[key]
+          if (b != null && b !== '') next[slug][key] = ''
+          else delete next[slug][key]
+        } else {
+          next[slug][key] = value
+        }
+        if (Object.keys(next[slug]).length === 0) delete next[slug]
+        writeLocal(next)
+        return next
+      })
+    },
+    [baseline],
+  )
 
   const dirtyCount = useMemo(() => {
     let n = 0
