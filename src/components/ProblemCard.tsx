@@ -4,6 +4,7 @@ import { CONFIDENCE, DIFFICULTY_COLOR, rgb, tagColor } from '../lib/patterns'
 import { companiesFor } from '../data/companies'
 import { ago } from '../lib/format'
 import Select from './Select'
+import AutoTextarea from './AutoTextarea'
 
 export default function ProblemCard({ problem, dojo }: { problem: Problem; dojo: Dojo }) {
   const { get, set } = dojo
@@ -102,12 +103,12 @@ export default function ProblemCard({ problem, dojo }: { problem: Problem; dojo:
         </div>
       </div>
 
-      {/* notes */}
-      <input
+      {/* notes — wraps and auto-grows so long notes stay fully visible */}
+      <AutoTextarea
         value={notes}
-        onChange={(e) => set(problem.slug, 'notes', e.target.value)}
+        onChange={(v) => set(problem.slug, 'notes', v)}
         placeholder="+ approach / notes…"
-        className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-2.5 py-1.5 text-[13px] font-medium text-ink outline-none transition placeholder:text-faint focus:border-accent-cyan/60 focus:bg-white/[0.05]"
+        className="rounded-lg border border-white/10 bg-white/[0.03] px-2.5 py-1.5 text-[13px] font-medium leading-snug text-ink outline-none transition placeholder:text-faint focus:border-accent-cyan/60 focus:bg-white/[0.05]"
       />
     </div>
   )
