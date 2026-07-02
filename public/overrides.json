@@ -11,6 +11,7 @@
   },
   "valid-anagram": {
     "confidence": "shaky",
-    "notes": "create a dict and store the count of letters for string 1,"
+    "notes": "create a dict and store the count of letters for string 1, and then use the same dict to subtract the count of string 2, if any key-value is not 0, it is not a valud anagram",
+    "revisit": "1"
   }
 }
